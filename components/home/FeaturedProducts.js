@@ -12,17 +12,17 @@ export default function FeaturedProducts() {
         <div className="flex items-end justify-between mb-8">
           <div>
             <p className="text-sm font-medium text-green-700 mb-1">
-              Handpicked for you
+              Selecționate pentru tine
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold text-stone-900">
-              Featured Products
+              Produse recomandate
             </h2>
           </div>
           <Link
             href="/products"
             className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-stone-600 hover:text-green-700 transition-colors"
           >
-            View all
+            Vezi toate
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

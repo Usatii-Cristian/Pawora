@@ -13,17 +13,17 @@ export default function NewArrivals() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Sparkles className="w-4 h-4 text-green-600" />
-              <p className="text-sm font-medium text-green-700">Just arrived</p>
+              <p className="text-sm font-medium text-green-700">Tocmai sosite</p>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-stone-900">
-              New Arrivals
+              Noutăți
             </h2>
           </div>
           <Link
             href="/products"
             className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-stone-600 hover:text-green-700 transition-colors"
           >
-            View all
+            Vezi toate
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

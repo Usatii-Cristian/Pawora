@@ -26,12 +26,12 @@ export default function AddToCartButton({ product }) {
       {added ? (
         <>
           <Check className="w-5 h-5" />
-          Added to Cart
+          Adăugat în coș
         </>
       ) : (
         <>
           <ShoppingCart className="w-5 h-5" />
-          Add to Cart
+          Adaugă în coș
         </>
       )}
     </button>

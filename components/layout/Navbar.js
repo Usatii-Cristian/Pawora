@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingCart, Menu, X, PawPrint, Search } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/products', label: 'Products' },
+  { href: '/', label: 'Acasă' },
+  { href: '/products', label: 'Produse' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -24,13 +24,10 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-green-700 rounded-lg flex items-center justify-center group-hover:bg-green-800 transition-colors">
-              <PawPrint className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-lg text-stone-900 tracking-tight">
-              Pawora
+          {/* Logo — text only */}
+          <Link href="/" className="flex items-center">
+            <span className="font-extrabold text-xl tracking-tight text-stone-900">
+              Paw<span className="text-green-700">ora</span>
             </span>
           </Link>
 
@@ -68,11 +65,10 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* Mobile toggle */}
             <button
               className="md:hidden p-2 text-stone-500 hover:text-stone-900 hover:bg-stone-50 rounded-lg transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              aria-label="Deschide meniul"
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

@@ -38,7 +38,7 @@ export default function ProductCard({ product }) {
           )}
           {product.newArrival && !product.bestseller && (
             <span className="absolute top-3 left-3 bg-green-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-              New
+              Nou
             </span>
           )}
         </div>
@@ -51,7 +51,7 @@ export default function ProductCard({ product }) {
             {product.name}
           </h3>
           <p className="font-bold text-stone-900 text-base mt-2">
-            ${product.price.toFixed(2)}
+            {product.price} lei
           </p>
         </div>
       </Link>
@@ -68,12 +68,12 @@ export default function ProductCard({ product }) {
           {added ? (
             <>
               <Check className="w-4 h-4" />
-              Added to Cart
+              Adăugat!
             </>
           ) : (
             <>
               <ShoppingCart className="w-4 h-4" />
-              Add to Cart
+              Adaugă în coș
             </>
           )}
         </button>

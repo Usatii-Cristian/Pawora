@@ -19,22 +19,17 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center min-h-[88vh] py-16 lg:py-20">
 
-          {/* LEFT — Copy */}
+          {/* LEFT — Conținut */}
           <div className="order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 text-[11px] font-bold px-3 py-1.5 rounded-full border border-green-100 mb-7 uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              Premium Pet Store
-            </div>
-
             <h1 className="text-5xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-extrabold text-stone-900 leading-[1.05] tracking-tight mb-6">
-              Everything<br />
-              Your Pet<br />
-              <span className="text-green-700">Deserves.</span>
+              Tot ce merită<br />
+              animalul<br />
+              <span className="text-green-700">tău.</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-stone-500 leading-relaxed mb-10 max-w-lg">
-              Premium food, toys, and accessories curated by pet care experts.
-              Delivered fast, with love.
+              Hrană premium, jucării și accesorii selectate de experți în îngrijirea animalelor.
+              Livrare rapidă, cu grijă.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-12">
@@ -42,22 +37,22 @@ export default function Hero() {
                 href="/products"
                 className="inline-flex items-center gap-2 bg-green-700 text-white font-bold px-8 py-4 rounded-2xl hover:bg-green-800 transition-all hover:shadow-xl hover:shadow-green-900/15 active:scale-[0.98]"
               >
-                Shop Now
+                Cumpără acum
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="/products"
                 className="inline-flex items-center gap-2 text-stone-700 font-semibold px-8 py-4 rounded-2xl border-2 border-stone-200 hover:border-stone-300 hover:bg-stone-50 transition-all"
               >
-                All Categories
+                Toate categoriile
               </Link>
             </div>
 
             {/* Social proof */}
             <div className="flex flex-wrap items-center gap-6 pt-7 border-t border-stone-100">
               <div>
-                <div className="text-2xl font-extrabold text-stone-900">10K+</div>
-                <div className="text-xs text-stone-500 mt-0.5">Happy customers</div>
+                <div className="text-2xl font-extrabold text-stone-900">10.000+</div>
+                <div className="text-xs text-stone-500 mt-0.5">Clienți mulțumiți</div>
               </div>
               <div className="w-px h-10 bg-stone-200" />
               <div>
@@ -66,32 +61,32 @@ export default function Hero() {
                     <Star key={i} className="w-4 h-4 text-orange-400 fill-orange-400" />
                   ))}
                 </div>
-                <div className="text-xs text-stone-500">4.9 avg. rating</div>
+                <div className="text-xs text-stone-500">Rating mediu 4.9</div>
               </div>
               <div className="w-px h-10 bg-stone-200 hidden sm:block" />
               <div className="hidden sm:flex items-center gap-2 text-sm text-stone-500">
                 <Truck className="w-4 h-4 text-green-600 shrink-0" />
-                Free shipping over $50
+                Livrare gratuită peste 500 lei
               </div>
             </div>
           </div>
 
-          {/* RIGHT — Featured Product Spotlight */}
+          {/* RIGHT — Card produs recomandat */}
           <div className="order-1 lg:order-2 relative hidden sm:block">
             <div className="relative max-w-sm mx-auto lg:mx-0 lg:ml-auto">
 
               {/* Main product card */}
               <div className="bg-white rounded-3xl border border-stone-200 shadow-2xl shadow-stone-900/10 overflow-hidden">
-                {/* Card header strip */}
+                {/* Header */}
                 <div className="flex items-center justify-between px-5 py-3 bg-green-700">
                   <div className="flex items-center gap-1.5">
                     <Star className="w-3.5 h-3.5 text-white fill-white" />
                     <span className="text-white text-xs font-bold uppercase tracking-wide">
-                      Bestseller
+                      Cel mai vândut
                     </span>
                   </div>
                   <span className="text-green-200 text-[11px]">
-                    Top pick this week
+                    Alegerea săptămânii
                   </span>
                 </div>
 
@@ -120,9 +115,9 @@ export default function Hero() {
                     </div>
                     <div className="shrink-0 text-right">
                       <div className="text-2xl font-extrabold text-stone-900">
-                        ${featuredProduct.price.toFixed(2)}
+                        {featuredProduct.price} lei
                       </div>
-                      <div className="text-xs text-green-600 mt-0.5">In Stock</div>
+                      <div className="text-xs text-green-600 mt-0.5">În stoc</div>
                     </div>
                   </div>
 
@@ -130,31 +125,31 @@ export default function Hero() {
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 text-orange-400 fill-orange-400" />
                     ))}
-                    <span className="text-xs text-stone-400 ml-1.5">256 reviews</span>
+                    <span className="text-xs text-stone-400 ml-1.5">256 recenzii</span>
                   </div>
 
                   <Link
                     href={`/products/${featuredProduct.slug || featuredProduct.id}`}
                     className="flex items-center justify-center gap-2 w-full bg-green-700 text-white font-semibold py-3 rounded-xl hover:bg-green-800 transition-colors text-sm"
                   >
-                    View Product
+                    Vezi produsul
                     <ArrowRight className="w-4 h-4" />
                   </Link>
 
                   <div className="mt-4 pt-4 border-t border-stone-100 flex items-center gap-5 text-xs text-stone-500">
                     <div className="flex items-center gap-1.5">
                       <CheckCircle className="w-3.5 h-3.5 text-green-600" />
-                      Free shipping
+                      Livrare gratuită
                     </div>
                     <div className="flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-green-600" />
-                      30-day returns
+                      Returnare 30 zile
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Floating badge — top right */}
+              {/* Floating — dreapta sus */}
               <div className="absolute -top-4 -right-5 bg-white rounded-2xl shadow-xl border border-stone-100 px-3.5 py-2.5 flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-orange-100 rounded-xl flex items-center justify-center shrink-0">
                   <Star className="w-4 h-4 text-orange-500 fill-orange-400" />
@@ -163,20 +158,20 @@ export default function Hero() {
                   <div className="font-bold text-stone-900 text-sm leading-none">
                     4.9 / 5.0
                   </div>
-                  <div className="text-[11px] text-stone-500 mt-0.5">Customer rating</div>
+                  <div className="text-[11px] text-stone-500 mt-0.5">Rating clienți</div>
                 </div>
               </div>
 
-              {/* Floating badge — bottom left */}
+              {/* Floating — stânga jos */}
               <div className="absolute -bottom-4 -left-5 bg-white rounded-2xl shadow-xl border border-stone-100 px-3.5 py-2.5 flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
                   <Truck className="w-4 h-4 text-green-700" />
                 </div>
                 <div>
                   <div className="font-bold text-stone-900 text-sm leading-none">
-                    Fast Delivery
+                    Livrare rapidă
                   </div>
-                  <div className="text-[11px] text-stone-500 mt-0.5">1–3 business days</div>
+                  <div className="text-[11px] text-stone-500 mt-0.5">1–3 zile lucrătoare</div>
                 </div>
               </div>
 

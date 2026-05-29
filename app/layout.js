@@ -12,12 +12,12 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'Pawora — Premium Pet Store',
+  title: 'Pawora — Magazin Online pentru Animale',
   description:
-    'Your trusted online pet store. Premium food, toys, and accessories for every animal companion. Fast delivery and expert care.',
+    'Magazinul tău de încredere pentru animale de companie. Hrană premium, jucării și accesorii pentru orice animal. Livrare rapidă în toată Moldova.',
   openGraph: {
-    title: 'Pawora — Premium Pet Store',
-    description: 'Premium food, toys, and accessories for every animal companion.',
+    title: 'Pawora — Magazin Online pentru Animale',
+    description: 'Hrană premium, jucării și accesorii pentru orice animal de companie.',
     type: 'website',
   },
 };

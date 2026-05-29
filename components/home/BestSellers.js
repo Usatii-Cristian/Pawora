@@ -13,17 +13,17 @@ export default function BestSellers() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <TrendingUp className="w-4 h-4 text-orange-500" />
-              <p className="text-sm font-medium text-orange-600">Most popular</p>
+              <p className="text-sm font-medium text-orange-600">Cele mai populare</p>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-stone-900">
-              Best Sellers
+              Cele mai vândute
             </h2>
           </div>
           <Link
             href="/products"
             className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-stone-600 hover:text-green-700 transition-colors"
           >
-            View all
+            Vezi toate
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

@@ -7,23 +7,23 @@ import { Mail, Phone, MapPin, Send, CheckCircle, ChevronRight, Clock } from 'luc
 const CONTACT_INFO = [
   {
     icon: MapPin,
-    title: 'Visit Us',
-    lines: ['123 Pet Street', 'London EC1A 1BB'],
+    title: 'Adresa noastră',
+    lines: ['Str. Ștefan cel Mare 123', 'Chișinău, Moldova'],
   },
   {
     icon: Phone,
-    title: 'Call Us',
-    lines: ['+44 20 1234 5678', 'Mon–Fri, 9am–6pm'],
+    title: 'Sună-ne',
+    lines: ['+373 22 123 456', 'Lun–Vin, 9:00–18:00'],
   },
   {
     icon: Mail,
-    title: 'Email Us',
-    lines: ['hello@pawora.com'],
+    title: 'Scrie-ne',
+    lines: ['salut@pawora.md'],
   },
   {
     icon: Clock,
-    title: 'Business Hours',
-    lines: ['Mon–Fri: 9am–6pm', 'Sat: 10am–4pm'],
+    title: 'Program de lucru',
+    lines: ['Lun–Vin: 9:00–18:00', 'Sâm: 10:00–16:00'],
   },
 ];
 
@@ -49,7 +49,7 @@ const inputClass = (hasError) =>
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [status, setStatus] = useState('idle');
 
   const setField = (field) => (e) => {
     setForm((f) => ({ ...f, [field]: e.target.value }));
@@ -58,12 +58,12 @@ export default function ContactPage() {
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim()) e.name = 'Name is required';
-    if (!form.email.trim()) e.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email';
-    if (!form.message.trim()) e.message = 'Message is required';
+    if (!form.name.trim()) e.name = 'Numele este obligatoriu';
+    if (!form.email.trim()) e.email = 'Email-ul este obligatoriu';
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Introdu un email valid';
+    if (!form.message.trim()) e.message = 'Mesajul este obligatoriu';
     else if (form.message.trim().length < 10)
-      e.message = 'Message must be at least 10 characters';
+      e.message = 'Mesajul trebuie să aibă cel puțin 10 caractere';
     return e;
   };
 
@@ -74,16 +74,14 @@ export default function ContactPage() {
       setErrors(validationErrors);
       return;
     }
-
     setStatus('loading');
-
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error('Request failed');
+      if (!res.ok) throw new Error();
       setStatus('success');
       setForm({ name: '', email: '', message: '' });
     } catch {
@@ -98,18 +96,15 @@ export default function ContactPage() {
           <div className="w-20 h-20 bg-green-50 rounded-3xl flex items-center justify-center mx-auto mb-5">
             <CheckCircle className="w-10 h-10 text-green-600" />
           </div>
-          <h2 className="text-2xl font-bold text-stone-900 mb-2">
-            Message Sent!
-          </h2>
+          <h2 className="text-2xl font-bold text-stone-900 mb-2">Mesaj trimis!</h2>
           <p className="text-stone-500 mb-8">
-            Thank you for reaching out. We&apos;ll get back to you within 24
-            hours.
+            Îți mulțumim că ne-ai contactat. Îți vom răspunde în maximum 24 de ore.
           </p>
           <button
             onClick={() => setStatus('idle')}
-            className="text-sm font-medium text-green-700 hover:text-green-800 hover:underline"
+            className="text-sm font-medium text-green-700 hover:underline"
           >
-            Send another message
+            Trimite un alt mesaj
           </button>
         </div>
       </div>
@@ -118,26 +113,21 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
       <div className="bg-white border-b border-stone-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <nav className="flex items-center gap-1.5 text-sm text-stone-500 mb-3">
-            <Link href="/" className="hover:text-stone-900 transition-colors">
-              Home
-            </Link>
+            <Link href="/" className="hover:text-stone-900 transition-colors">Acasă</Link>
             <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
             <span className="text-stone-900 font-medium">Contact</span>
           </nav>
-          <h1 className="text-3xl font-bold text-stone-900">Get in Touch</h1>
-          <p className="text-stone-500 mt-1">
-            Have a question? We&apos;re happy to help.
-          </p>
+          <h1 className="text-3xl font-bold text-stone-900">Contactează-ne</h1>
+          <p className="text-stone-500 mt-1">Ai o întrebare? Suntem bucuroși să ajutăm.</p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Contact info */}
+          {/* Info contact */}
           <div className="space-y-3">
             {CONTACT_INFO.map((item) => {
               const Icon = item.icon;
@@ -150,13 +140,9 @@ export default function ContactPage() {
                     <Icon className="w-5 h-5 text-green-700" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-stone-900 text-sm mb-1">
-                      {item.title}
-                    </h4>
+                    <h4 className="font-semibold text-stone-900 text-sm mb-1">{item.title}</h4>
                     {item.lines.map((line, i) => (
-                      <p key={i} className="text-sm text-stone-500">
-                        {line}
-                      </p>
+                      <p key={i} className="text-sm text-stone-500">{line}</p>
                     ))}
                   </div>
                 </div>
@@ -164,45 +150,44 @@ export default function ContactPage() {
             })}
           </div>
 
-          {/* Form */}
+          {/* Formular */}
           <div className="lg:col-span-2">
             <form
               onSubmit={handleSubmit}
               className="bg-white rounded-2xl p-7 border border-stone-100 shadow-sm"
             >
               <h2 className="text-lg font-bold text-stone-900 mb-6">
-                Send us a message
+                Trimite-ne un mesaj
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                <InputField label="Full Name" error={errors.name}>
+                <InputField label="Nume complet" error={errors.name}>
                   <input
                     type="text"
                     value={form.name}
                     onChange={setField('name')}
-                    placeholder="John Smith"
+                    placeholder="Ion Popescu"
                     className={inputClass(!!errors.name)}
                   />
                 </InputField>
-
-                <InputField label="Email Address" error={errors.email}>
+                <InputField label="Adresă email" error={errors.email}>
                   <input
                     type="email"
                     value={form.email}
                     onChange={setField('email')}
-                    placeholder="john@example.com"
+                    placeholder="ion@example.com"
                     className={inputClass(!!errors.email)}
                   />
                 </InputField>
               </div>
 
               <div className="mb-6">
-                <InputField label="Message" error={errors.message}>
+                <InputField label="Mesaj" error={errors.message}>
                   <textarea
                     rows={6}
                     value={form.message}
                     onChange={setField('message')}
-                    placeholder="Tell us how we can help you..."
+                    placeholder="Cum te putem ajuta?"
                     className={`${inputClass(!!errors.message)} resize-none`}
                   />
                 </InputField>
@@ -212,24 +197,23 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="flex items-center gap-2 bg-green-700 text-white font-semibold px-8 py-4 rounded-xl hover:bg-green-800 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 bg-green-700 text-white font-semibold px-8 py-4 rounded-xl hover:bg-green-800 transition-colors disabled:opacity-60"
                 >
                   {status === 'loading' ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Sending...
+                      Se trimite...
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      Send Message
+                      Trimite mesajul
                     </>
                   )}
                 </button>
-
                 {status === 'error' && (
                   <p className="text-sm text-red-500">
-                    Something went wrong. Please try again.
+                    Ceva nu a funcționat. Încearcă din nou.
                   </p>
                 )}
               </div>

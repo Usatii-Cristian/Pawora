@@ -1,18 +1,18 @@
 import Link from 'next/link';
-import { PawPrint, Mail, Phone, MapPin, Globe, Share2, AtSign } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, Share2, AtSign } from 'lucide-react';
 
 const CATEGORY_LINKS = [
-  { href: '/products?category=dogs', label: 'Dogs' },
-  { href: '/products?category=cats', label: 'Cats' },
-  { href: '/products?category=birds', label: 'Birds' },
-  { href: '/products?category=fish', label: 'Fish' },
-  { href: '/products?category=small-animals', label: 'Small Animals' },
+  { href: '/products?category=dogs', label: 'Câini' },
+  { href: '/products?category=cats', label: 'Pisici' },
+  { href: '/products?category=birds', label: 'Păsări' },
+  { href: '/products?category=fish', label: 'Pești' },
+  { href: '/products?category=small-animals', label: 'Animale Mici' },
 ];
 
 const QUICK_LINKS = [
-  { href: '/products', label: 'All Products' },
-  { href: '/contact', label: 'Contact Us' },
-  { href: '/cart', label: 'Shopping Cart' },
+  { href: '/products', label: 'Toate produsele' },
+  { href: '/contact', label: 'Contactează-ne' },
+  { href: '/cart', label: 'Coș de cumpărături' },
 ];
 
 export default function Footer() {
@@ -22,15 +22,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4 w-fit">
-              <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                <PawPrint className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-bold text-lg text-white">Pawora</span>
+            <Link href="/" className="inline-block mb-4">
+              <span className="font-extrabold text-xl tracking-tight text-white">
+                Paw<span className="text-green-500">ora</span>
+              </span>
             </Link>
             <p className="text-sm leading-relaxed text-stone-500 mb-5">
-              Your trusted online pet store. Premium products carefully selected
-              for every animal companion.
+              Magazinul tău online de încredere pentru animale de companie.
+              Produse premium selectate cu grijă pentru fiecare animal.
             </p>
             <div className="flex items-center gap-2">
               <a
@@ -57,10 +56,10 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Categories */}
+          {/* Categorii */}
           <div>
             <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
-              Categories
+              Categorii
             </h4>
             <ul className="space-y-2.5">
               {CATEGORY_LINKS.map((link) => (
@@ -76,10 +75,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Linkuri rapide */}
           <div>
             <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
-              Quick Links
+              Linkuri rapide
             </h4>
             <ul className="space-y-2.5">
               {QUICK_LINKS.map((link) => (
@@ -103,15 +102,15 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-stone-500">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-stone-600" />
-                123 Pet Street, London EC1A 1BB
+                Str. Ștefan cel Mare 123, Chișinău
               </li>
               <li className="flex items-center gap-3 text-sm text-stone-500">
                 <Phone className="w-4 h-4 shrink-0 text-stone-600" />
-                +44 20 1234 5678
+                +373 22 123 456
               </li>
               <li className="flex items-center gap-3 text-sm text-stone-500">
                 <Mail className="w-4 h-4 shrink-0 text-stone-600" />
-                hello@pawora.com
+                salut@pawora.md
               </li>
             </ul>
           </div>
@@ -119,10 +118,10 @@ export default function Footer() {
 
         <div className="border-t border-stone-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-stone-600">
-            &copy; {new Date().getFullYear()} Pawora. All rights reserved.
+            &copy; {new Date().getFullYear()} Pawora. Toate drepturile rezervate.
           </p>
           <p className="text-xs text-stone-600">
-            Practice project — no real transactions are processed.
+            Proiect de practică — nu se procesează tranzacții reale.
           </p>
         </div>
       </div>
