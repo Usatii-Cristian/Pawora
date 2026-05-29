@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
+import ConditionalLayout from '@/components/layout/ConditionalLayout';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
@@ -14,6 +15,11 @@ export const metadata = {
   title: 'Pawora — Premium Pet Store',
   description:
     'Your trusted online pet store. Premium food, toys, and accessories for every animal companion. Fast delivery and expert care.',
+  openGraph: {
+    title: 'Pawora — Premium Pet Store',
+    description: 'Premium food, toys, and accessories for every animal companion.',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -21,9 +27,9 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-stone-50 font-[family-name:var(--font-inter)]">
         <CartProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <ConditionalLayout navbar={<Navbar />} footer={<Footer />}>
+            {children}
+          </ConditionalLayout>
         </CartProvider>
       </body>
     </html>

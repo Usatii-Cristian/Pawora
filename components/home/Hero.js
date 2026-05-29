@@ -1,136 +1,188 @@
 import Link from 'next/link';
-import {
-  ArrowRight,
-  Shield,
-  Truck,
-  Star,
-  PawPrint,
-  Dog,
-  Cat,
-  Bird,
-  Fish,
-} from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, Star, Truck, CheckCircle, ShieldCheck } from 'lucide-react';
+import { PRODUCTS } from '@/lib/mockData';
 
 export default function Hero() {
+  const featuredProduct =
+    PRODUCTS.find((p) => p.featured && p.bestseller) || PRODUCTS[0];
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-stone-50 via-white to-green-50">
-      {/* Decorative blobs */}
+    <section className="relative overflow-hidden bg-white">
+      {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-green-100 rounded-full opacity-40 blur-3xl" />
-        <div className="absolute bottom-0 -left-16 w-80 h-80 bg-orange-100 rounded-full opacity-30 blur-3xl" />
+        <div className="absolute top-0 right-0 w-[45%] h-full bg-stone-50" />
+        <div className="absolute -top-40 right-48 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-orange-100/30 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left — Copy */}
-          <div>
-            <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 text-sm font-medium px-3 py-1.5 rounded-full mb-6 border border-green-100">
-              <Star className="w-3.5 h-3.5 fill-green-500 text-green-500" />
-              Trusted by 10,000+ pet owners
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center min-h-[88vh] py-16 lg:py-20">
+
+          {/* LEFT — Copy */}
+          <div className="order-2 lg:order-1">
+            <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 text-[11px] font-bold px-3 py-1.5 rounded-full border border-green-100 mb-7 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              Premium Pet Store
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-stone-900 leading-[1.1] mb-5">
-              Everything Your
-              <br />
-              <span className="text-green-700">Pet Deserves</span>
+            <h1 className="text-5xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-extrabold text-stone-900 leading-[1.05] tracking-tight mb-6">
+              Everything<br />
+              Your Pet<br />
+              <span className="text-green-700">Deserves.</span>
             </h1>
 
-            <p className="text-lg text-stone-600 leading-relaxed mb-8 max-w-md">
-              Premium food, toys, and accessories for every animal companion.
-              Curated with care, delivered fast.
+            <p className="text-lg sm:text-xl text-stone-500 leading-relaxed mb-10 max-w-lg">
+              Premium food, toys, and accessories curated by pet care experts.
+              Delivered fast, with love.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-12">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 bg-green-700 text-white font-semibold px-6 py-3.5 rounded-xl hover:bg-green-800 transition-colors shadow-sm shadow-green-900/10"
+                className="inline-flex items-center gap-2 bg-green-700 text-white font-bold px-8 py-4 rounded-2xl hover:bg-green-800 transition-all hover:shadow-xl hover:shadow-green-900/15 active:scale-[0.98]"
               >
                 Shop Now
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 bg-white text-stone-700 font-semibold px-6 py-3.5 rounded-xl border border-stone-200 hover:bg-stone-50 hover:border-stone-300 transition-all"
+                className="inline-flex items-center gap-2 text-stone-700 font-semibold px-8 py-4 rounded-2xl border-2 border-stone-200 hover:border-stone-300 hover:bg-stone-50 transition-all"
               >
-                Browse Categories
+                All Categories
               </Link>
             </div>
 
-            {/* Trust badges */}
-            <div className="flex flex-wrap gap-5">
-              <div className="flex items-center gap-2 text-sm text-stone-600">
-                <div className="w-7 h-7 bg-green-50 rounded-lg flex items-center justify-center">
-                  <Truck className="w-3.5 h-3.5 text-green-700" />
-                </div>
-                Free shipping over $50
+            {/* Social proof */}
+            <div className="flex flex-wrap items-center gap-6 pt-7 border-t border-stone-100">
+              <div>
+                <div className="text-2xl font-extrabold text-stone-900">10K+</div>
+                <div className="text-xs text-stone-500 mt-0.5">Happy customers</div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-stone-600">
-                <div className="w-7 h-7 bg-green-50 rounded-lg flex items-center justify-center">
-                  <Shield className="w-3.5 h-3.5 text-green-700" />
+              <div className="w-px h-10 bg-stone-200" />
+              <div>
+                <div className="flex items-center gap-0.5 mb-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-orange-400 fill-orange-400" />
+                  ))}
                 </div>
-                Secure checkout
+                <div className="text-xs text-stone-500">4.9 avg. rating</div>
+              </div>
+              <div className="w-px h-10 bg-stone-200 hidden sm:block" />
+              <div className="hidden sm:flex items-center gap-2 text-sm text-stone-500">
+                <Truck className="w-4 h-4 text-green-600 shrink-0" />
+                Free shipping over $50
               </div>
             </div>
           </div>
 
-          {/* Right — Visual showcase */}
-          <div className="relative hidden lg:flex items-center justify-center">
-            <div className="relative w-72">
-              {/* Main card */}
-              <div className="bg-gradient-to-br from-green-600 to-green-800 rounded-3xl px-8 py-10 text-white text-center shadow-2xl shadow-green-900/25">
-                <div className="w-20 h-20 bg-white/15 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                  <PawPrint className="w-10 h-10 text-white" />
+          {/* RIGHT — Featured Product Spotlight */}
+          <div className="order-1 lg:order-2 relative hidden sm:block">
+            <div className="relative max-w-sm mx-auto lg:mx-0 lg:ml-auto">
+
+              {/* Main product card */}
+              <div className="bg-white rounded-3xl border border-stone-200 shadow-2xl shadow-stone-900/10 overflow-hidden">
+                {/* Card header strip */}
+                <div className="flex items-center justify-between px-5 py-3 bg-green-700">
+                  <div className="flex items-center gap-1.5">
+                    <Star className="w-3.5 h-3.5 text-white fill-white" />
+                    <span className="text-white text-xs font-bold uppercase tracking-wide">
+                      Bestseller
+                    </span>
+                  </div>
+                  <span className="text-green-200 text-[11px]">
+                    Top pick this week
+                  </span>
                 </div>
-                <div className="text-5xl font-bold mb-1">500+</div>
-                <div className="text-green-200 text-sm mb-7">
-                  Premium Pet Products
+
+                {/* Product image */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-stone-50">
+                  <Image
+                    src={featuredProduct.image}
+                    alt={featuredProduct.name}
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 480px"
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { icon: Dog, label: 'Dogs', count: '120+' },
-                    { icon: Cat, label: 'Cats', count: '95+' },
-                    { icon: Bird, label: 'Birds', count: '60+' },
-                    { icon: Fish, label: 'Fish', count: '80+' },
-                  ].map(({ icon: Icon, label, count }) => (
-                    <div
-                      key={label}
-                      className="bg-white/10 rounded-xl py-2.5 px-3"
-                    >
-                      <Icon className="w-4 h-4 mx-auto mb-1 text-green-200" />
-                      <div className="text-xs font-medium">{count}</div>
-                      <div className="text-[11px] text-green-300">{label}</div>
+
+                {/* Product details */}
+                <div className="p-5">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div>
+                      <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded-full capitalize">
+                        {featuredProduct.category.replace(/-/g, ' ')}
+                      </span>
+                      <h3 className="font-bold text-stone-900 text-base mt-1.5 leading-snug">
+                        {featuredProduct.name}
+                      </h3>
                     </div>
-                  ))}
+                    <div className="shrink-0 text-right">
+                      <div className="text-2xl font-extrabold text-stone-900">
+                        ${featuredProduct.price.toFixed(2)}
+                      </div>
+                      <div className="text-xs text-green-600 mt-0.5">In Stock</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 text-orange-400 fill-orange-400" />
+                    ))}
+                    <span className="text-xs text-stone-400 ml-1.5">256 reviews</span>
+                  </div>
+
+                  <Link
+                    href={`/products/${featuredProduct.slug || featuredProduct.id}`}
+                    className="flex items-center justify-center gap-2 w-full bg-green-700 text-white font-semibold py-3 rounded-xl hover:bg-green-800 transition-colors text-sm"
+                  >
+                    View Product
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+
+                  <div className="mt-4 pt-4 border-t border-stone-100 flex items-center gap-5 text-xs text-stone-500">
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle className="w-3.5 h-3.5 text-green-600" />
+                      Free shipping
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <ShieldCheck className="w-3.5 h-3.5 text-green-600" />
+                      30-day returns
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Floating badge — top left */}
-              <div className="absolute -top-5 -left-10 bg-white rounded-2xl shadow-lg border border-stone-100 px-4 py-3 flex items-center gap-3">
+              {/* Floating badge — top right */}
+              <div className="absolute -top-4 -right-5 bg-white rounded-2xl shadow-xl border border-stone-100 px-3.5 py-2.5 flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-orange-100 rounded-xl flex items-center justify-center shrink-0">
                   <Star className="w-4 h-4 text-orange-500 fill-orange-400" />
                 </div>
                 <div>
-                  <div className="font-bold text-stone-900 text-sm leading-none mb-0.5">
+                  <div className="font-bold text-stone-900 text-sm leading-none">
                     4.9 / 5.0
                   </div>
-                  <div className="text-xs text-stone-500">Customer Rating</div>
+                  <div className="text-[11px] text-stone-500 mt-0.5">Customer rating</div>
                 </div>
               </div>
 
-              {/* Floating badge — bottom right */}
-              <div className="absolute -bottom-5 -right-10 bg-white rounded-2xl shadow-lg border border-stone-100 px-4 py-3 flex items-center gap-3">
+              {/* Floating badge — bottom left */}
+              <div className="absolute -bottom-4 -left-5 bg-white rounded-2xl shadow-xl border border-stone-100 px-3.5 py-2.5 flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
                   <Truck className="w-4 h-4 text-green-700" />
                 </div>
                 <div>
-                  <div className="font-bold text-stone-900 text-sm leading-none mb-0.5">
+                  <div className="font-bold text-stone-900 text-sm leading-none">
                     Fast Delivery
                   </div>
-                  <div className="text-xs text-stone-500">1–3 business days</div>
+                  <div className="text-[11px] text-stone-500 mt-0.5">1–3 business days</div>
                 </div>
               </div>
+
             </div>
           </div>
+
         </div>
       </div>
     </section>

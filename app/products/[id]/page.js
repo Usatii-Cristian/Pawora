@@ -6,19 +6,30 @@ import { PRODUCTS, CATEGORIES } from '@/lib/mockData';
 import ProductCard from '@/components/ui/ProductCard';
 import AddToCartButton from '@/components/ui/AddToCartButton';
 
+// Static generation for all 30 products at build time
+export async function generateStaticParams() {
+  return PRODUCTS.map((p) => ({ id: p.slug || p.id }));
+}
+
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const product = PRODUCTS.find((p) => p.id === id);
+  const product = PRODUCTS.find((p) => p.slug === id || p.id === id);
   if (!product) return {};
   return {
     title: `${product.name} — Pawora`,
     description: product.description.slice(0, 155),
+    openGraph: {
+      title: product.name,
+      description: product.description.slice(0, 155),
+      images: [{ url: product.image }],
+    },
   };
 }
 
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
-  const product = PRODUCTS.find((p) => p.id === id);
+  // Accept both slug and ID
+  const product = PRODUCTS.find((p) => p.slug === id || p.id === id);
 
   if (!product) notFound();
 
@@ -41,10 +52,7 @@ export default async function ProductDetailPage({ params }) {
               Home
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-            <Link
-              href="/products"
-              className="hover:text-stone-900 transition-colors"
-            >
+            <Link href="/products" className="hover:text-stone-900 transition-colors">
               Products
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
@@ -104,15 +112,10 @@ export default async function ProductDetailPage({ params }) {
             <div className="flex items-center gap-2 mb-5">
               <div className="flex items-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 text-orange-400 fill-orange-400"
-                  />
+                  <Star key={i} className="w-4 h-4 text-orange-400 fill-orange-400" />
                 ))}
               </div>
-              <span className="text-sm text-stone-500">
-                4.9 (128 reviews)
-              </span>
+              <span className="text-sm text-stone-500">4.9 (128 reviews)</span>
             </div>
 
             <p className="text-stone-600 leading-relaxed mb-7 text-base">
@@ -162,6 +165,10 @@ export default async function ProductDetailPage({ params }) {
                   </p>
                 </div>
               )}
+              <div>
+                <p className="text-xs text-stone-500 mb-0.5">URL slug</p>
+                <p className="text-sm font-mono text-stone-500">{product.slug}</p>
+              </div>
             </div>
           </div>
         </div>

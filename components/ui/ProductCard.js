@@ -22,7 +22,7 @@ export default function ProductCard({ product }) {
 
   return (
     <article className="group bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
-      <Link href={`/products/${product.id}`} className="block">
+      <Link href={`/products/${product.slug || product.id}`} className="block">
         <div className="relative aspect-square overflow-hidden bg-stone-50">
           <Image
             src={product.image}
