@@ -35,7 +35,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <article className="group bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+    <article className="group bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-xl hover:shadow-stone-900/8 transition-all duration-300 hover:-translate-y-1">
       <Link href={`/products/${product.slug || product.id}`} className="block">
         <div className="relative aspect-square overflow-hidden bg-stone-50">
           <Image
@@ -46,25 +46,28 @@ export default function ProductCard({ product }) {
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
 
-          {/* Badge */}
+          {/* Shimmer overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
+
+          {/* Badges */}
           {product.bestseller && (
-            <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+            <span className="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm shadow-orange-500/30">
               Bestseller
             </span>
           )}
           {product.newArrival && !product.bestseller && (
-            <span className="absolute top-3 left-3 bg-green-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-              Nou
+            <span className="absolute top-3 left-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm shadow-emerald-500/30">
+              Noutate
             </span>
           )}
 
           {/* Wishlist button */}
           <button
             onClick={handleWishlist}
-            className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-sm ${
+            className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shadow-sm ${
               wishlisted
                 ? 'bg-red-500 text-white opacity-100'
-                : 'bg-white text-stone-400 hover:text-red-500 opacity-0 group-hover:opacity-100'
+                : 'bg-white/90 text-stone-400 hover:text-red-500 opacity-0 group-hover:opacity-100 hover:scale-110'
             }`}
             aria-label={wishlisted ? 'Scoate din favorite' : 'Adaugă la favorite'}
           >
@@ -73,14 +76,15 @@ export default function ProductCard({ product }) {
         </div>
 
         <div className="p-4 pb-3">
-          <span className="inline-block text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded-full">
+          <span className="inline-block text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
             {getCategoryLabel(product.category)}
           </span>
-          <h3 className="font-semibold text-stone-900 text-sm leading-snug line-clamp-2 mt-2 group-hover:text-green-700 transition-colors">
+          <h3 className="font-semibold text-stone-900 text-sm leading-snug line-clamp-2 mt-2 group-hover:text-green-700 transition-colors duration-200">
             {product.name}
           </h3>
           <p className="font-bold text-stone-900 text-base mt-2">
-            {product.price} lei
+            {product.price}{' '}
+            <span className="text-xs font-medium text-stone-500">lei</span>
           </p>
         </div>
       </Link>
@@ -89,10 +93,10 @@ export default function ProductCard({ product }) {
         {product.stock > 0 ? (
           <button
             onClick={handleAdd}
-            className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+            className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
               added
-                ? 'bg-green-50 text-green-700 border border-green-200'
-                : 'bg-green-700 text-white hover:bg-green-800 active:scale-95'
+                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                : 'bg-stone-900 text-white hover:bg-green-700 active:scale-95 hover:shadow-md hover:shadow-green-900/20'
             }`}
           >
             {added ? (
