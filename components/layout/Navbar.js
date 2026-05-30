@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ShoppingCart, Menu, X, Search, Heart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -44,11 +45,18 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16">
 
             {/* Logo */}
-            <Link href="/" className="group flex items-center gap-1.5">
-              <span className="font-extrabold text-xl tracking-tight text-stone-900 transition-colors group-hover:text-green-700">
-                Paw<span className="text-transparent bg-clip-text"
+            <Link href="/" className="group flex items-center gap-2">
+              <Image
+                src="/logo.png"
+                alt="AquaPet"
+                width={36}
+                height={36}
+                className="rounded-xl object-contain transition-transform duration-200 group-hover:scale-105"
+              />
+              <span className="font-extrabold text-lg tracking-tight text-stone-900 group-hover:text-blue-700 transition-colors hidden sm:block">
+                Aqua<span className="text-transparent bg-clip-text"
                   style={{ backgroundImage: 'linear-gradient(135deg, #16a34a, #10b981)' }}>
-                  ora
+                  Pet
                 </span>
               </span>
             </Link>

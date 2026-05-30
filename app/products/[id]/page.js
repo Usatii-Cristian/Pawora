@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
   const product = getProducts().find((p) => p.slug === id || p.id === id);
   if (!product) return {};
   return {
-    title: `${product.name} — Pawora`,
+    title: `${product.name} — AquaPet`,
     description: product.description.slice(0, 155),
     openGraph: {
       title: product.name,

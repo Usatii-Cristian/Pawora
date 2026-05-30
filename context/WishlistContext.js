@@ -24,13 +24,13 @@ export function WishlistProvider({ children }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('pawora-wishlist');
+      const saved = localStorage.getItem('aquapet-wishlist');
       if (saved) dispatch({ type: 'LOAD', payload: JSON.parse(saved) });
     } catch {}
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('pawora-wishlist', JSON.stringify(items));
+    localStorage.setItem('aquapet-wishlist', JSON.stringify(items));
   }, [items]);
 
   const toggle = (product) => dispatch({ type: 'TOGGLE', payload: product });

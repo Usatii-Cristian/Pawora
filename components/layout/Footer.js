@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MapPin, AtSign, Globe, Heart } from 'lucide-react';
 
 const CATEGORY_LINKS = [
@@ -14,6 +15,8 @@ const QUICK_LINKS = [
   { href: '/contact', label: 'Contactează-ne' },
   { href: '/cart', label: 'Coș de cumpărături' },
   { href: '/wishlist', label: 'Lista de favorite' },
+  { href: '/termeni', label: 'Termeni de utilizare' },
+  { href: '/confidentialitate', label: 'Confidențialitate' },
 ];
 
 export default function Footer() {
@@ -34,12 +37,19 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-5">
-              <span className="font-extrabold text-2xl tracking-tight text-white">
-                Paw
+            <Link href="/" className="inline-flex items-center gap-2.5 mb-5 group">
+              <Image
+                src="/logo.png"
+                alt="AquaPet"
+                width={40}
+                height={40}
+                className="rounded-xl object-contain group-hover:scale-105 transition-transform"
+              />
+              <span className="font-extrabold text-xl tracking-tight text-white">
+                Aqua
                 <span className="text-transparent bg-clip-text"
                   style={{ backgroundImage: 'linear-gradient(135deg, #4ade80, #34d399)' }}>
-                  ora
+                  Pet
                 </span>
               </span>
             </Link>
@@ -129,7 +139,7 @@ export default function Footer() {
                 <div className="w-7 h-7 rounded-lg bg-white/6 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-colors">
                   <Mail className="w-3.5 h-3.5 text-stone-600 group-hover:text-emerald-400 transition-colors" />
                 </div>
-                salut@pawora.md
+                salut@aquapet.md
               </li>
             </ul>
           </div>
@@ -138,7 +148,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/6 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-stone-600 flex items-center gap-1.5">
-            &copy; {new Date().getFullYear()} Pawora — Făcut cu
+            &copy; {new Date().getFullYear()} AquaPet — Făcut cu
             <Heart className="w-3 h-3 text-red-500 fill-red-500" />
             în Moldova
           </p>

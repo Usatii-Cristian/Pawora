@@ -42,7 +42,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('pawora-cart');
+      const saved = localStorage.getItem('aquapet-cart');
       if (saved) dispatch({ type: 'LOAD_CART', payload: JSON.parse(saved) });
     } catch {
       // Ignore parse errors
@@ -50,7 +50,7 @@ export function CartProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('pawora-cart', JSON.stringify(items));
+    localStorage.setItem('aquapet-cart', JSON.stringify(items));
   }, [items]);
 
   const addToCart = (product) =>

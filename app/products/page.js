@@ -3,7 +3,7 @@ import { getProducts, CATEGORIES } from '@/lib/store';
 import ProductCard from '@/components/ui/ProductCard';
 
 export const metadata = {
-  title: 'Produse — Pawora',
+  title: 'Produse — AquaPet',
   description: 'Navighează toată gama noastră de produse premium pentru animale.',
 };
 

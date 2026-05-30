@@ -45,7 +45,7 @@ export default function TrustSection() {
         <FadeIn>
           <div className="text-center mb-12">
             <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
-              De ce Pawora?
+              De ce AquaPet?
             </p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
               Tot ce contează pentru{' '}

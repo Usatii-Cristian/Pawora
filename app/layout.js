@@ -14,13 +14,18 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'Pawora — Magazin Online pentru Animale',
+  title: 'AquaPet — Magazin Online pentru Animale',
   description:
     'Magazinul tău de încredere pentru animale de companie. Hrană premium, jucării și accesorii pentru orice animal. Livrare rapidă în toată Moldova.',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   openGraph: {
-    title: 'Pawora — Magazin Online pentru Animale',
+    title: 'AquaPet — Magazin Online pentru Animale',
     description: 'Hrană premium, jucării și accesorii pentru orice animal de companie.',
     type: 'website',
+    images: [{ url: '/logo.png', width: 512, height: 512 }],
   },
 };
 

@@ -18,7 +18,7 @@ const CONTACT_INFO = [
   {
     icon: Mail,
     title: 'Scrie-ne',
-    lines: ['salut@pawora.md'],
+    lines: ['salut@aquapet.md'],
   },
   {
     icon: Clock,

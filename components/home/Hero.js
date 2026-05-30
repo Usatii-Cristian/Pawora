@@ -126,7 +126,7 @@ export default function Hero() {
                   href={`/products/${showcase[0].slug || showcase[0].id}`}
                   className="group block relative z-20 bg-white rounded-3xl overflow-hidden shadow-2xl shadow-black/40 hover:-translate-y-1 transition-transform duration-300"
                 >
-                  <div className="relative h-56 bg-stone-100">
+                  <div className="relative aspect-square bg-stone-100">
                     <Image
                       src={showcase[0].image}
                       alt={showcase[0].name}
@@ -166,7 +166,7 @@ export default function Hero() {
                   href={`/products/${showcase[1].slug || showcase[1].id}`}
                   className="group absolute -top-6 -right-6 z-30 w-44 bg-white rounded-2xl overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
                 >
-                  <div className="relative h-28 bg-stone-100">
+                  <div className="relative aspect-square bg-stone-100">
                     <Image
                       src={showcase[1].image}
                       alt={showcase[1].name}
@@ -188,7 +188,7 @@ export default function Hero() {
                   href={`/products/${showcase[2].slug || showcase[2].id}`}
                   className="group absolute -bottom-6 -left-6 z-30 w-40 bg-white rounded-2xl overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
                 >
-                  <div className="relative h-24 bg-stone-100">
+                  <div className="relative aspect-square bg-stone-100">
                     <Image
                       src={showcase[2].image}
                       alt={showcase[2].name}

@@ -29,7 +29,7 @@ export default function AdminNav() {
               <PawPrint className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-bold text-sm text-white hidden sm:block">
-              Pawora Admin
+              AquaPet Admin
             </span>
           </Link>
 

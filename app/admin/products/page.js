@@ -7,7 +7,7 @@ import { getProducts, CATEGORIES } from '@/lib/store';
 import { Plus, ExternalLink, Pencil } from 'lucide-react';
 import AdminDeleteButton from '@/components/admin/AdminDeleteButton';
 
-export const metadata = { title: 'Products — Pawora Admin' };
+export const metadata = { title: 'Products — AquaPet Admin' };
 
 export default async function AdminProductsPage({ searchParams }) {
   const cookieStore = await cookies();

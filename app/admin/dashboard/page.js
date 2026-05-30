@@ -5,7 +5,7 @@ import { verifyToken } from '@/lib/jwt';
 import { getProducts, CATEGORIES } from '@/lib/store';
 import { Package, Tag, TrendingUp, Sparkles, ExternalLink, CheckCircle } from 'lucide-react';
 
-export const metadata = { title: 'Dashboard — Pawora Admin' };
+export const metadata = { title: 'Dashboard — AquaPet Admin' };
 
 export default async function AdminDashboardPage() {
   const cookieStore = await cookies();

@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
             <PawPrint className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-stone-900">Admin Panel</h1>
-          <p className="text-stone-500 text-sm mt-1">Pawora Management System</p>
+          <p className="text-stone-500 text-sm mt-1">AquaPet Management System</p>
         </div>
 
         <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-7">
