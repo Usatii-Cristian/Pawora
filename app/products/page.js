@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PRODUCTS, CATEGORIES } from '@/lib/mockData';
+import { getProducts, CATEGORIES } from '@/lib/store';
 import ProductCard from '@/components/ui/ProductCard';
 
 export const metadata = {
@@ -11,9 +11,10 @@ export default async function ProductsPage({ searchParams }) {
   const params = await searchParams;
   const selectedCategory = params?.category || '';
 
+  const allProducts = getProducts();
   const products = selectedCategory
-    ? PRODUCTS.filter((p) => p.category === selectedCategory)
-    : PRODUCTS;
+    ? allProducts.filter((p) => p.category === selectedCategory)
+    : allProducts;
 
   const currentCategoryName = selectedCategory
     ? CATEGORIES.find((c) => c.slug === selectedCategory)?.name || 'Produse'

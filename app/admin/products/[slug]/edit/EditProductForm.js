@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, Wand2 } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 
-const CATEGORIES = [
+const CATEGORIES_LIST = [
   { slug: 'dogs', name: 'Câini' },
   { slug: 'cats', name: 'Pisici' },
   { slug: 'birds', name: 'Păsări' },
@@ -15,47 +15,27 @@ const CATEGORIES = [
 
 const SUBCATEGORIES = ['food', 'toys', 'accessories'];
 
-function slugify(text) {
-  return text
-    .toString()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-const EMPTY = {
-  name: '',
-  description: '',
-  price: '',
-  image: '',
-  category: 'dogs',
-  subcategory: 'food',
-  featured: false,
-  bestseller: false,
-  newArrival: false,
-  stock: '10',
-};
-
-export default function NewProductPage() {
-  const [form, setForm] = useState(EMPTY);
-  const [previewSlug, setPreviewSlug] = useState('');
+export default function EditProductForm({ product }) {
+  const [form, setForm] = useState({
+    name: product.name,
+    description: product.description,
+    price: String(product.price),
+    image: product.image || '',
+    category: product.category,
+    subcategory: product.subcategory || '',
+    featured: product.featured,
+    bestseller: product.bestseller,
+    newArrival: product.newArrival,
+    stock: String(product.stock),
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
 
   const setField = (field) => (e) => {
-    const value =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setForm((f) => ({ ...f, [field]: value }));
-
-    if (field === 'name') {
-      setPreviewSlug(slugify(e.target.value));
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -64,8 +44,8 @@ export default function NewProductPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/admin/products', {
-        method: 'POST',
+      const res = await fetch(`/api/admin/products/${product.slug || product.id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
@@ -75,14 +55,13 @@ export default function NewProductPage() {
       });
 
       const data = await res.json();
-
       if (!res.ok) {
-        setError(data.error || 'A apărut o eroare');
+        setError(data.error || 'Eroare la salvare');
         return;
       }
 
-      router.push('/admin/products');
-      router.refresh();
+      setSuccess(true);
+      setTimeout(() => router.push('/admin/products'), 1500);
     } catch {
       setError('Eroare de rețea. Încearcă din nou.');
     } finally {
@@ -97,7 +76,6 @@ export default function NewProductPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         <Link
           href="/admin/products"
@@ -106,12 +84,16 @@ export default function NewProductPage() {
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-stone-900">Produs nou</h1>
-          <p className="text-stone-500 text-sm mt-0.5">
-            Completează detaliile produsului
-          </p>
+          <h1 className="text-2xl font-bold text-stone-900">Editează produs</h1>
+          <p className="text-stone-500 text-sm mt-0.5 font-mono">{product.slug}</p>
         </div>
       </div>
+
+      {success && (
+        <div className="bg-green-50 text-green-700 text-sm px-4 py-3 rounded-xl border border-green-100 mb-6">
+          Produs actualizat cu succes! Redirecționare...
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
@@ -120,29 +102,12 @@ export default function NewProductPage() {
           </div>
         )}
 
-        {/* Main info */}
         <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 space-y-5">
           <h2 className="font-semibold text-stone-900">Informații principale</h2>
 
           <div>
             <label className={labelClass}>Nume produs *</label>
-            <input
-              type="text"
-              value={form.name}
-              onChange={setField('name')}
-              placeholder="ex: Royal Canin Adult 4kg"
-              required
-              className={inputClass}
-            />
-            {previewSlug && (
-              <div className="mt-2 flex items-center gap-2 text-xs text-stone-500">
-                <Wand2 className="w-3.5 h-3.5 text-green-600" />
-                Slug generat automat:{' '}
-                <code className="bg-stone-100 px-1.5 py-0.5 rounded font-mono text-stone-700">
-                  {previewSlug}
-                </code>
-              </div>
-            )}
+            <input type="text" value={form.name} onChange={setField('name')} required className={inputClass} />
           </div>
 
           <div>
@@ -151,7 +116,6 @@ export default function NewProductPage() {
               rows={4}
               value={form.description}
               onChange={setField('description')}
-              placeholder="Descrie produsul în detaliu..."
               required
               className={`${inputClass} resize-none`}
             />
@@ -166,7 +130,6 @@ export default function NewProductPage() {
                 min="0"
                 value={form.price}
                 onChange={setField('price')}
-                placeholder="299"
                 required
                 className={inputClass}
               />
@@ -178,7 +141,6 @@ export default function NewProductPage() {
                 min="0"
                 value={form.stock}
                 onChange={setField('stock')}
-                placeholder="10"
                 className={inputClass}
               />
             </div>
@@ -190,93 +152,59 @@ export default function NewProductPage() {
               type="url"
               value={form.image}
               onChange={setField('image')}
-              placeholder="https://... (lăsă gol pentru placeholder automat)"
               className={inputClass}
             />
-            {!form.image && previewSlug && (
-              <p className="mt-1.5 text-xs text-stone-400">
-                Va folosi:{' '}
-                <code className="font-mono">
-                  picsum.photos/seed/{previewSlug}/600/600
-                </code>
-              </p>
-            )}
           </div>
         </div>
 
-        {/* Category */}
-        <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 space-y-5">
+        <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 space-y-4">
           <h2 className="font-semibold text-stone-900">Categorie</h2>
-
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Categorie principală *</label>
-              <select
-                value={form.category}
-                onChange={setField('category')}
-                required
-                className={inputClass}
-              >
-                {CATEGORIES.map((c) => (
-                  <option key={c.slug} value={c.slug}>
-                    {c.name}
-                  </option>
+              <select value={form.category} onChange={setField('category')} required className={inputClass}>
+                {CATEGORIES_LIST.map((c) => (
+                  <option key={c.slug} value={c.slug}>{c.name}</option>
                 ))}
               </select>
             </div>
             <div>
               <label className={labelClass}>Subcategorie</label>
-              <select
-                value={form.subcategory}
-                onChange={setField('subcategory')}
-                className={inputClass}
-              >
+              <select value={form.subcategory} onChange={setField('subcategory')} className={inputClass}>
                 <option value="">— Niciuna —</option>
                 {SUBCATEGORIES.map((s) => (
-                  <option key={s} value={s} className="capitalize">
-                    {s}
-                  </option>
+                  <option key={s} value={s} className="capitalize">{s}</option>
                 ))}
               </select>
             </div>
           </div>
         </div>
 
-        {/* Tags */}
         <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6">
           <h2 className="font-semibold text-stone-900 mb-4">Etichete</h2>
           <div className="space-y-3">
             {[
-              { field: 'featured', label: 'Produse recomandate (Featured)', desc: 'Apare în secțiunea Featured de pe homepage' },
-              { field: 'bestseller', label: 'Bestseller', desc: 'Afișează badge Bestseller și apare în secțiunea Best Sellers' },
-              { field: 'newArrival', label: 'Noutăți (New Arrival)', desc: 'Afișează badge New și apare în secțiunea New Arrivals' },
-            ].map(({ field, label, desc }) => (
-              <label
-                key={field}
-                className="flex items-start gap-3 cursor-pointer group"
-              >
+              { field: 'featured', label: 'Featured (Produs recomandat)' },
+              { field: 'bestseller', label: 'Bestseller' },
+              { field: 'newArrival', label: 'Noutate (New Arrival)' },
+            ].map(({ field, label }) => (
+              <label key={field} className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={form[field]}
                   onChange={setField(field)}
-                  className="mt-0.5 w-4 h-4 rounded accent-green-700"
+                  className="w-4 h-4 rounded accent-green-700"
                 />
-                <div>
-                  <span className="text-sm font-medium text-stone-900">
-                    {label}
-                  </span>
-                  <p className="text-xs text-stone-500 mt-0.5">{desc}</p>
-                </div>
+                <span className="text-sm font-medium text-stone-900">{label}</span>
               </label>
             ))}
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex items-center gap-3 pb-8">
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || success}
             className="flex items-center gap-2 bg-green-700 text-white font-semibold px-7 py-3.5 rounded-xl hover:bg-green-800 transition-colors disabled:opacity-60"
           >
             {loading ? (
@@ -287,7 +215,7 @@ export default function NewProductPage() {
             ) : (
               <>
                 <Save className="w-4 h-4" />
-                Salvează produsul
+                Salvează modificările
               </>
             )}
           </button>

@@ -1,15 +1,11 @@
 import { NextResponse } from 'next/server';
 import { signToken } from '@/lib/jwt';
 
-// In production replace with hashed password (bcrypt) stored in env vars
-const ADMIN_EMAIL = 'cristiusa98@gmail.com';
-const ADMIN_PASSWORD = 'cristinel';
-
 export async function POST(request) {
   try {
     const { email, password } = await request.json();
 
-    if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+    if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 

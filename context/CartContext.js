@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useReducer, useEffect } from 'react';
+import { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
 
 const CartContext = createContext(null);
 
@@ -61,10 +61,13 @@ export function CartProvider({ children }) {
     dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
   const clearCart = () => dispatch({ type: 'CLEAR_CART' });
 
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
+  const itemCount = useMemo(
+    () => items.reduce((sum, item) => sum + item.quantity, 0),
+    [items]
+  );
+  const total = useMemo(
+    () => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [items]
   );
 
   return (

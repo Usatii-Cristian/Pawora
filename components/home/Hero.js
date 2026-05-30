@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Star, Truck, CheckCircle, ShieldCheck } from 'lucide-react';
-import { PRODUCTS } from '@/lib/mockData';
+import { getProducts } from '@/lib/store';
+import { getCategoryLabel } from '@/lib/categories';
 
 export default function Hero() {
+  const products = getProducts();
   const featuredProduct =
-    PRODUCTS.find((p) => p.featured && p.bestseller) || PRODUCTS[0];
+    products.find((p) => p.featured && p.bestseller) || products[0];
 
   return (
     <section className="relative overflow-hidden bg-white">
-      {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 right-0 w-[45%] h-full bg-stone-50" />
         <div className="absolute -top-40 right-48 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl" />
@@ -19,7 +20,7 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center min-h-[88vh] py-16 lg:py-20">
 
-          {/* LEFT — Conținut */}
+          {/* LEFT */}
           <div className="order-2 lg:order-1">
             <h1 className="text-5xl sm:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-extrabold text-stone-900 leading-[1.05] tracking-tight mb-6">
               Tot ce merită<br />
@@ -48,7 +49,6 @@ export default function Hero() {
               </Link>
             </div>
 
-            {/* Social proof */}
             <div className="flex flex-wrap items-center gap-6 pt-7 border-t border-stone-100">
               <div>
                 <div className="text-2xl font-extrabold text-stone-900">10.000+</div>
@@ -71,13 +71,10 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* RIGHT — Card produs recomandat */}
+          {/* RIGHT — Featured Product Spotlight */}
           <div className="order-1 lg:order-2 relative hidden sm:block">
             <div className="relative max-w-sm mx-auto lg:mx-0 lg:ml-auto">
-
-              {/* Main product card */}
               <div className="bg-white rounded-3xl border border-stone-200 shadow-2xl shadow-stone-900/10 overflow-hidden">
-                {/* Header */}
                 <div className="flex items-center justify-between px-5 py-3 bg-green-700">
                   <div className="flex items-center gap-1.5">
                     <Star className="w-3.5 h-3.5 text-white fill-white" />
@@ -85,12 +82,9 @@ export default function Hero() {
                       Cel mai vândut
                     </span>
                   </div>
-                  <span className="text-green-200 text-[11px]">
-                    Alegerea săptămânii
-                  </span>
+                  <span className="text-green-200 text-[11px]">Alegerea săptămânii</span>
                 </div>
 
-                {/* Product image */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-stone-50">
                   <Image
                     src={featuredProduct.image}
@@ -102,12 +96,11 @@ export default function Hero() {
                   />
                 </div>
 
-                {/* Product details */}
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div>
-                      <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded-full capitalize">
-                        {featuredProduct.category.replace(/-/g, ' ')}
+                      <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded-full">
+                        {getCategoryLabel(featuredProduct.category)}
                       </span>
                       <h3 className="font-bold text-stone-900 text-base mt-1.5 leading-snug">
                         {featuredProduct.name}
@@ -149,32 +142,25 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Floating — dreapta sus */}
               <div className="absolute -top-4 -right-5 bg-white rounded-2xl shadow-xl border border-stone-100 px-3.5 py-2.5 flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-orange-100 rounded-xl flex items-center justify-center shrink-0">
                   <Star className="w-4 h-4 text-orange-500 fill-orange-400" />
                 </div>
                 <div>
-                  <div className="font-bold text-stone-900 text-sm leading-none">
-                    4.9 / 5.0
-                  </div>
+                  <div className="font-bold text-stone-900 text-sm leading-none">4.9 / 5.0</div>
                   <div className="text-[11px] text-stone-500 mt-0.5">Rating clienți</div>
                 </div>
               </div>
 
-              {/* Floating — stânga jos */}
               <div className="absolute -bottom-4 -left-5 bg-white rounded-2xl shadow-xl border border-stone-100 px-3.5 py-2.5 flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
                   <Truck className="w-4 h-4 text-green-700" />
                 </div>
                 <div>
-                  <div className="font-bold text-stone-900 text-sm leading-none">
-                    Livrare rapidă
-                  </div>
+                  <div className="font-bold text-stone-900 text-sm leading-none">Livrare rapidă</div>
                   <div className="text-[11px] text-stone-500 mt-0.5">1–3 zile lucrătoare</div>
                 </div>
               </div>
-
             </div>
           </div>
 

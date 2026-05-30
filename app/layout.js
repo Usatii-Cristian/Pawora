@@ -1,6 +1,8 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
+import { WishlistProvider } from '@/context/WishlistContext';
+import { ToastProvider } from '@/context/ToastContext';
 import ConditionalLayout from '@/components/layout/ConditionalLayout';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -24,12 +26,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html lang="ro" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-stone-50 font-[family-name:var(--font-inter)]">
         <CartProvider>
-          <ConditionalLayout navbar={<Navbar />} footer={<Footer />}>
-            {children}
-          </ConditionalLayout>
+          <WishlistProvider>
+            <ToastProvider>
+              <ConditionalLayout navbar={<Navbar />} footer={<Footer />}>
+                {children}
+              </ConditionalLayout>
+            </ToastProvider>
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>

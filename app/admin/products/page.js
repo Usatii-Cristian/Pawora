@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { verifyToken } from '@/lib/jwt';
-import { PRODUCTS, CATEGORIES } from '@/lib/mockData';
-import { Plus, ExternalLink } from 'lucide-react';
+import { getProducts, CATEGORIES } from '@/lib/store';
+import { Plus, ExternalLink, Pencil } from 'lucide-react';
 import AdminDeleteButton from '@/components/admin/AdminDeleteButton';
 
 export const metadata = { title: 'Products — Pawora Admin' };
@@ -19,9 +19,10 @@ export default async function AdminProductsPage({ searchParams }) {
   const params = await searchParams;
   const selectedCategory = params?.category || '';
 
+  const allProducts = getProducts();
   const filtered = selectedCategory
-    ? PRODUCTS.filter((p) => p.category === selectedCategory)
-    : PRODUCTS;
+    ? allProducts.filter((p) => p.category === selectedCategory)
+    : allProducts;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -120,7 +121,7 @@ export default async function AdminProductsPage({ searchParams }) {
                     </span>
                   </td>
                   <td className="px-5 py-3.5 text-sm font-bold text-stone-900">
-                    ${product.price.toFixed(2)}
+                    {product.price} lei
                   </td>
                   <td className="px-5 py-3.5">
                     <span
@@ -155,7 +156,14 @@ export default async function AdminProductsPage({ searchParams }) {
                     </div>
                   </td>
                   <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <Link
+                        href={`/admin/products/${product.slug || product.id}/edit`}
+                        className="p-1.5 text-stone-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        title="Editează"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </Link>
                       <Link
                         href={`/products/${product.slug || product.id}`}
                         target="_blank"

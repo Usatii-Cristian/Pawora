@@ -1,49 +1,24 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { verifyToken } from '@/lib/jwt';
-import { PRODUCTS } from '@/lib/mockData';
-
-function slugify(text) {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim();
-}
-
-async function verifyAdmin() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('admin-token')?.value;
-  if (!token) return false;
-  const payload = await verifyToken(token);
-  return !!payload;
-}
+import { getProducts, saveProducts } from '@/lib/store';
+import { slugify } from '@/lib/slugify';
 
 export async function GET() {
-  if (!(await verifyAdmin())) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-  return NextResponse.json(PRODUCTS);
+  return NextResponse.json(getProducts());
 }
 
 export async function POST(request) {
-  if (!(await verifyAdmin())) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     const body = await request.json();
     const { name, description, price, image, category, subcategory, featured, bestseller, newArrival, stock } = body;
 
     if (!name || !description || !price || !category) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json({ error: 'Câmpuri obligatorii lipsă' }, { status: 400 });
     }
 
+    const products = getProducts();
     const slug = slugify(name);
-    const existing = PRODUCTS.find((p) => p.slug === slug);
-    if (existing) {
-      return NextResponse.json({ error: 'A product with this name already exists' }, { status: 409 });
+    if (products.find((p) => p.slug === slug)) {
+      return NextResponse.json({ error: 'Un produs cu acest nume există deja' }, { status: 409 });
     }
 
     const newProduct = {
@@ -61,11 +36,11 @@ export async function POST(request) {
       stock: parseInt(stock, 10) || 0,
     };
 
-    // Push to in-memory array (resets on server restart — needs MongoDB for persistence)
-    PRODUCTS.push(newProduct);
+    products.push(newProduct);
+    saveProducts(products);
 
     return NextResponse.json(newProduct, { status: 201 });
   } catch {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Eroare server' }, { status: 500 });
   }
 }

@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+
+# local data store (produse și comenzi salvate pe disc)
+/data/
 /.pnp
 .pnp.*
 .yarn/*

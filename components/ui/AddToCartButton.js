@@ -3,13 +3,16 @@
 import { useState } from 'react';
 import { ShoppingCart, Check } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useToast } from '@/context/ToastContext';
 
 export default function AddToCartButton({ product }) {
   const { addToCart } = useCart();
+  const { addToast } = useToast();
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
     addToCart(product);
+    addToast({ message: 'Produs adăugat în coș!' });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };

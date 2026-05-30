@@ -2,17 +2,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ChevronRight, Package, Star } from 'lucide-react';
-import { PRODUCTS, CATEGORIES } from '@/lib/mockData';
+import { getProducts, CATEGORIES } from '@/lib/store';
 import ProductCard from '@/components/ui/ProductCard';
 import AddToCartButton from '@/components/ui/AddToCartButton';
+import WishlistButton from '@/components/ui/WishlistButton';
 
 export async function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ id: p.slug || p.id }));
+  return getProducts().map((p) => ({ id: p.slug || p.id }));
 }
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const product = PRODUCTS.find((p) => p.slug === id || p.id === id);
+  const product = getProducts().find((p) => p.slug === id || p.id === id);
   if (!product) return {};
   return {
     title: `${product.name} — Pawora`,
@@ -27,14 +28,15 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
-  const product = PRODUCTS.find((p) => p.slug === id || p.id === id);
+  const products = getProducts();
+  const product = products.find((p) => p.slug === id || p.id === id);
 
   if (!product) notFound();
 
   const category = CATEGORIES.find((c) => c.slug === product.category);
-  const related = PRODUCTS.filter(
-    (p) => p.category === product.category && p.id !== product.id
-  ).slice(0, 4);
+  const related = products
+    .filter((p) => p.category === product.category && p.id !== product.id)
+    .slice(0, 4);
 
   const categoryDisplay =
     category?.name ||
@@ -142,8 +144,9 @@ export default async function ProductDetailPage({ params }) {
             </div>
 
             {product.stock > 0 && (
-              <div className="flex flex-col sm:flex-row gap-3 items-start">
+              <div className="flex flex-col sm:flex-row gap-3 items-start flex-wrap">
                 <AddToCartButton product={product} />
+                <WishlistButton product={product} />
                 <Link
                   href="/cart"
                   className="flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold text-base text-stone-700 border border-stone-200 hover:bg-stone-50 transition-colors"

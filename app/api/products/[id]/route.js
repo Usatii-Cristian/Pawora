@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { PRODUCTS } from '@/lib/mockData';
+import { getProducts } from '@/lib/store';
 
 export async function GET(request, { params }) {
   const { id } = await params;
-  const product = PRODUCTS.find((p) => p.id === id);
+  const products = getProducts();
+  const product = products.find((p) => p.slug === id || p.id === id);
 
   if (!product) {
     return NextResponse.json({ error: 'Product not found' }, { status: 404 });

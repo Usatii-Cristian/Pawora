@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PRODUCTS } from '@/lib/mockData';
+import { getProducts } from '@/lib/store';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -9,7 +9,7 @@ export async function GET(request) {
   const newArrival = searchParams.get('new');
   const limit = searchParams.get('limit');
 
-  let products = [...PRODUCTS];
+  let products = getProducts();
 
   if (category) products = products.filter((p) => p.category === category);
   if (featured === 'true') products = products.filter((p) => p.featured);

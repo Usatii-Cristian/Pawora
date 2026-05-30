@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { verifyToken } from '@/lib/jwt';
-import { PRODUCTS, CATEGORIES } from '@/lib/mockData';
+import { getProducts, CATEGORIES } from '@/lib/store';
 import { Package, Tag, TrendingUp, Sparkles, ExternalLink, CheckCircle } from 'lucide-react';
 
 export const metadata = { title: 'Dashboard — Pawora Admin' };
@@ -14,17 +14,19 @@ export default async function AdminDashboardPage() {
   const payload = await verifyToken(token);
   if (!payload) redirect('/admin/login');
 
+  const products = getProducts();
+
   const stats = [
     {
-      label: 'Total Products',
-      value: PRODUCTS.length,
+      label: 'Total Produse',
+      value: products.length,
       icon: Package,
       color: 'text-blue-700',
       bg: 'bg-blue-50',
       border: 'border-blue-100',
     },
     {
-      label: 'Categories',
+      label: 'Categorii',
       value: CATEGORIES.length,
       icon: Tag,
       color: 'text-green-700',
@@ -33,15 +35,15 @@ export default async function AdminDashboardPage() {
     },
     {
       label: 'Featured',
-      value: PRODUCTS.filter((p) => p.featured).length,
+      value: products.filter((p) => p.featured).length,
       icon: TrendingUp,
       color: 'text-orange-700',
       bg: 'bg-orange-50',
       border: 'border-orange-100',
     },
     {
-      label: 'New Arrivals',
-      value: PRODUCTS.filter((p) => p.newArrival).length,
+      label: 'Noutăți',
+      value: products.filter((p) => p.newArrival).length,
       icon: Sparkles,
       color: 'text-violet-700',
       bg: 'bg-violet-50',
@@ -49,8 +51,8 @@ export default async function AdminDashboardPage() {
     },
   ];
 
-  const totalStock = PRODUCTS.reduce((sum, p) => sum + p.stock, 0);
-  const lowStock = PRODUCTS.filter((p) => p.stock <= 10);
+  const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
+  const lowStock = products.filter((p) => p.stock <= 10);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -117,7 +119,7 @@ export default async function AdminDashboardPage() {
           <h2 className="font-semibold text-stone-900">Toate produsele</h2>
           <div className="flex items-center gap-3 text-xs text-stone-500">
             <span className="bg-stone-50 px-2.5 py-1 rounded-full border border-stone-100">
-              {PRODUCTS.length} produse
+              {products.length} produse
             </span>
             <span className="bg-stone-50 px-2.5 py-1 rounded-full border border-stone-100">
               {totalStock} unități în stoc
@@ -140,7 +142,7 @@ export default async function AdminDashboardPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-50">
-              {PRODUCTS.map((product) => (
+              {products.map((product) => (
                 <tr
                   key={product.id}
                   className="hover:bg-stone-50/60 transition-colors group"
@@ -158,7 +160,7 @@ export default async function AdminDashboardPage() {
                         {product.name}
                       </span>
                       <Link
-                        href={`/products/${product.id}`}
+                        href={`/products/${product.slug || product.id}`}
                         target="_blank"
                         className="opacity-0 group-hover:opacity-100 transition-opacity"
                       >
@@ -172,7 +174,7 @@ export default async function AdminDashboardPage() {
                     </span>
                   </td>
                   <td className="px-5 py-3.5 text-sm font-bold text-stone-900">
-                    ${product.price.toFixed(2)}
+                    {product.price} lei
                   </td>
                   <td className="px-5 py-3.5">
                     <span
