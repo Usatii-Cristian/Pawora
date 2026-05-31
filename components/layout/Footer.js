@@ -12,6 +12,7 @@ const CATEGORY_LINKS = [
 
 const QUICK_LINKS = [
   { href: '/products', label: 'Toate produsele' },
+  { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contactează-ne' },
   { href: '/cart', label: 'Coș de cumpărături' },
   { href: '/wishlist', label: 'Lista de favorite' },

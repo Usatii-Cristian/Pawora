@@ -12,6 +12,7 @@ import SearchModal from '@/components/ui/SearchModal';
 const NAV_LINKS = [
   { href: '/', label: 'Acasă' },
   { href: '/products', label: 'Produse' },
+  { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ];
 

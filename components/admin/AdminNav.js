@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { PawPrint, LayoutDashboard, Package, LogOut, ExternalLink } from 'lucide-react';
+import { PawPrint, LayoutDashboard, Package, LogOut, ExternalLink, Mail, FileText } from 'lucide-react';
 
 const NAV_ITEMS = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/products', label: 'Products', icon: Package },
+  { href: '/admin/products', label: 'Produse', icon: Package },
+  { href: '/admin/blog', label: 'Blog', icon: FileText },
+  { href: '/admin/messages', label: 'Mesaje', icon: Mail },
 ];
 
 export default function AdminNav() {

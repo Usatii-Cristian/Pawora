@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getMessages, saveMessages } from '@/lib/store';
 
 export async function POST(request) {
   try {
@@ -6,28 +7,26 @@ export async function POST(request) {
     const { name, email, message } = body;
 
     if (!name?.trim() || !email?.trim() || !message?.trim()) {
-      return NextResponse.json(
-        { error: 'All fields are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Toate câmpurile sunt obligatorii' }, { status: 400 });
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email address' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Adresă de email invalidă' }, { status: 400 });
     }
 
-    // In production: save to MongoDB via Prisma
-    // const saved = await prisma.message.create({ data: { name, email, message } });
-    console.log('[Contact Form]', { name, email, message: message.slice(0, 80) });
+    const messages = getMessages();
+    messages.unshift({
+      id: `msg-${Date.now()}`,
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim(),
+      read: false,
+      createdAt: new Date().toISOString(),
+    });
+    saveMessages(messages);
 
     return NextResponse.json({ success: true });
   } catch {
-    return NextResponse.json(
-      { error: 'Failed to send message' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Trimiterea mesajului a eșuat' }, { status: 500 });
   }
 }
