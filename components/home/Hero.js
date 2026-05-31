@@ -1,234 +1,184 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Star, Truck, ShieldCheck, Sparkles, Package } from 'lucide-react';
-import { getProducts } from '@/lib/store';
-import { getCategoryLabel } from '@/lib/categories';
 
 const TRUST_PILLS = [
-  { icon: Truck, text: 'Livrare gratuită peste 500 lei' },
-  { icon: ShieldCheck, text: 'Returnare 30 zile' },
-  { icon: Package, text: 'Produse originale garantate' },
+  { icon: Truck,       text: 'Livrare gratuită 500+ lei' },
+  { icon: ShieldCheck, text: 'Produse verificate' },
+  { icon: Package,     text: 'Retur 30 zile' },
 ];
 
 export default function Hero() {
-  const products = getProducts();
-  const showcase = products
-    .filter((p) => p.featured || p.bestseller)
-    .slice(0, 3);
-
   return (
-    <section className="relative overflow-hidden bg-[#0f1f0f] min-h-[92vh] flex items-center">
+    <section className="relative w-full overflow-hidden" style={{ minHeight: '92vh' }}>
 
-      {/* ── Background decorations ── */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        {/* Large radial glow — top right */}
-        <div className="absolute -top-32 -right-32 w-[700px] h-[700px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(34,197,94,0.18) 0%, transparent 70%)' }} />
-        {/* Smaller glow — bottom left */}
-        <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%)' }} />
-        {/* Subtle grid texture */}
-        <div className="absolute inset-0 opacity-[0.04]"
-          style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
-      </div>
+      {/* ── Imaginea de fundal ── */}
+      <Image
+        src="/hero-bg.png"
+        alt="AquaPet — animale fericite"
+        fill
+        priority
+        className="object-cover object-center"
+        sizes="100vw"
+      />
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+      {/* ── Gradient overlay stânga → transparent, pentru lizibilitate text ── */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(90deg, rgba(15,40,15,0.92) 0%, rgba(15,40,15,0.80) 35%, rgba(15,40,15,0.30) 60%, transparent 80%)',
+        }}
+      />
 
-          {/* ── LEFT — Copy ── */}
-          <div className="order-2 lg:order-1 flex flex-col">
+      {/* ── Conținut text — stânga ── */}
+      <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+        <div className="w-full max-w-xl py-20 lg:py-28">
 
-            {/* Eyebrow badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 text-emerald-300 text-xs font-semibold px-4 py-2 rounded-full w-fit mb-7 tracking-wide">
-              <Sparkles className="w-3.5 h-3.5" />
-              Magazin Premium pentru Animale
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-[3.75rem] xl:text-[4.25rem] font-extrabold leading-[1.04] tracking-tight text-white mb-6">
-              Tot ce merită{' '}
-              <span className="relative inline-block">
-                <span className="relative z-10 text-transparent bg-clip-text"
-                  style={{ backgroundImage: 'linear-gradient(135deg, #4ade80 0%, #86efac 50%, #fbbf24 100%)' }}>
-                  animalul
-                </span>
-                {/* Underline accent */}
-                <span className="absolute -bottom-1 left-0 w-full h-[3px] rounded-full bg-gradient-to-r from-emerald-400 to-amber-400 opacity-60" />
-              </span>
-              <br />tău.
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-stone-400 text-lg leading-relaxed mb-10 max-w-[480px]">
-              Hrană premium, jucării și accesorii selectate de experți. Livrare rapidă în toată Moldova — cu grijă și cu dragoste.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3 mb-10">
-              <Link
-                href="/products"
-                className="group inline-flex items-center gap-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-200 hover:shadow-2xl hover:shadow-emerald-500/30 active:scale-[0.97]"
-              >
-                Cumpără acum
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-              </Link>
-              <Link
-                href="/products"
-                className="inline-flex items-center gap-2 text-white/80 hover:text-white font-semibold px-8 py-4 rounded-2xl border border-white/20 hover:border-white/40 hover:bg-white/5 transition-all duration-200"
-              >
-                Explorează
-              </Link>
-            </div>
-
-            {/* Trust pills */}
-            <div className="flex flex-wrap gap-2 mb-10">
-              {TRUST_PILLS.map(({ icon: Icon, text }) => (
-                <div
-                  key={text}
-                  className="inline-flex items-center gap-2 bg-white/8 border border-white/10 text-stone-300 text-xs px-3.5 py-2 rounded-full"
-                >
-                  <Icon className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  {text}
-                </div>
-              ))}
-            </div>
-
-            {/* Stats row */}
-            <div className="flex items-center gap-6 pt-7 border-t border-white/10">
-              <div>
-                <div className="text-2xl font-extrabold text-white">10.000+</div>
-                <div className="text-xs text-stone-500 mt-0.5">Clienți mulțumiți</div>
-              </div>
-              <div className="w-px h-9 bg-white/10" />
-              <div>
-                <div className="flex items-center gap-0.5 mb-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                  ))}
-                </div>
-                <div className="text-xs text-stone-500">Rating mediu 4.9 / 5</div>
-              </div>
-              <div className="w-px h-9 bg-white/10" />
-              <div>
-                <div className="text-2xl font-extrabold text-white">50+</div>
-                <div className="text-xs text-stone-500 mt-0.5">Produse disponibile</div>
-              </div>
-            </div>
+          {/* Eyebrow */}
+          <div className="inline-flex items-center gap-2 border border-[#4ade80]/30 bg-[#4ade80]/10 text-[#4ade80] text-xs font-semibold px-4 py-1.5 rounded-full mb-7 backdrop-blur-sm tracking-wider uppercase animate-fade-in">
+            <Sparkles className="w-3.5 h-3.5" />
+            Magazin premium pentru animale
           </div>
 
-          {/* ── RIGHT — Product showcase ── */}
-          <div className="order-1 lg:order-2 hidden sm:flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[420px]">
+          {/* Titlu principal — text care "crește" din imagine */}
+          <h1
+            className="font-extrabold leading-[1.04] tracking-tight mb-6 animate-fade-in-up"
+            style={{
+              fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
+              animationDelay: '80ms',
+            }}
+          >
+            {/* "Tot ce" — alb pur */}
+            <span className="block text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
+              Tot ce
+            </span>
 
-              {/* Main card — center */}
-              {showcase[0] && (
-                <Link
-                  href={`/products/${showcase[0].slug || showcase[0].id}`}
-                  className="group block relative z-20 bg-white rounded-3xl overflow-hidden shadow-2xl shadow-black/40 hover:-translate-y-1 transition-transform duration-300"
-                >
-                  <div className="relative aspect-square bg-stone-100">
-                    <Image
-                      src={showcase[0].image}
-                      alt={showcase[0].name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="420px"
-                      priority
-                    />
-                    <span className="absolute top-3 left-3 bg-emerald-500 text-white text-[11px] font-bold px-2.5 py-1 rounded-full tracking-wide uppercase">
-                      {showcase[0].bestseller ? 'Bestseller' : 'Featured'}
-                    </span>
-                  </div>
-                  <div className="p-4">
-                    <span className="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                      {getCategoryLabel(showcase[0].category)}
-                    </span>
-                    <h3 className="font-bold text-stone-900 text-sm mt-2 leading-snug line-clamp-1">
-                      {showcase[0].name}
-                    </h3>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="text-lg font-extrabold text-stone-900">
-                        {showcase[0].price} lei
-                      </span>
-                      <div className="flex items-center gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-3 h-3 text-amber-400 fill-amber-400" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              )}
+            {/* "merită" — gradient verde care imită luminozitatea fundalului */}
+            <span
+              className="block text-transparent bg-clip-text"
+              style={{
+                backgroundImage:
+                  'linear-gradient(135deg, #6ee7b7 0%, #4ade80 40%, #86efac 70%, #d1fae5 100%)',
+                filter: 'drop-shadow(0 0 24px rgba(74,222,128,0.45))',
+              }}
+            >
+              merită
+            </span>
 
-              {/* Secondary card — top right */}
-              {showcase[1] && (
-                <Link
-                  href={`/products/${showcase[1].slug || showcase[1].id}`}
-                  className="group absolute -top-6 -right-6 z-30 w-44 bg-white rounded-2xl overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
-                >
-                  <div className="relative aspect-square bg-stone-100">
-                    <Image
-                      src={showcase[1].image}
-                      alt={showcase[1].name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="176px"
-                    />
-                  </div>
-                  <div className="p-2.5">
-                    <p className="text-[11px] font-semibold text-stone-800 line-clamp-1">{showcase[1].name}</p>
-                    <p className="text-xs font-bold text-emerald-700 mt-0.5">{showcase[1].price} lei</p>
-                  </div>
-                </Link>
-              )}
+            {/* "animalul tău." — alb + accent */}
+            <span className="block text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
+              animalul{' '}
+              <span
+                className="text-transparent bg-clip-text"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f59e0b 100%)',
+                }}
+              >
+                tău.
+              </span>
+            </span>
+          </h1>
 
-              {/* Tertiary card — bottom left */}
-              {showcase[2] && (
-                <Link
-                  href={`/products/${showcase[2].slug || showcase[2].id}`}
-                  className="group absolute -bottom-6 -left-6 z-30 w-40 bg-white rounded-2xl overflow-hidden shadow-xl shadow-black/30 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
-                >
-                  <div className="relative aspect-square bg-stone-100">
-                    <Image
-                      src={showcase[2].image}
-                      alt={showcase[2].name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="160px"
-                    />
-                  </div>
-                  <div className="p-2.5">
-                    <p className="text-[11px] font-semibold text-stone-800 line-clamp-1">{showcase[2].name}</p>
-                    <p className="text-xs font-bold text-emerald-700 mt-0.5">{showcase[2].price} lei</p>
-                  </div>
-                </Link>
-              )}
+          {/* Subtitlu */}
+          <p
+            className="text-[#d1fae5]/80 text-lg leading-relaxed mb-9 max-w-md animate-fade-in-up"
+            style={{ animationDelay: '160ms' }}
+          >
+            Hrană premium, jucării și accesorii selectate de experți.
+            Livrare rapidă în toată Moldova — cu grijă și cu dragoste.
+          </p>
 
-              {/* Floating badge — rating */}
-              <div className="absolute top-1/2 -left-10 -translate-y-1/2 z-40 bg-white rounded-2xl shadow-xl border border-stone-100 px-3.5 py-3 flex items-center gap-2.5">
-                <div className="w-9 h-9 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
-                </div>
-                <div>
-                  <div className="font-extrabold text-stone-900 text-sm leading-none">4.9 / 5</div>
-                  <div className="text-[10px] text-stone-400 mt-0.5">Rating clienți</div>
-                </div>
+          {/* CTA-uri */}
+          <div
+            className="flex flex-wrap gap-3 mb-10 animate-fade-in-up"
+            style={{ animationDelay: '240ms' }}
+          >
+            <Link
+              href="/products"
+              className="group inline-flex items-center gap-2.5 font-bold px-8 py-4 rounded-2xl transition-all duration-200 active:scale-[0.97] hover:shadow-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #16a34a, #15803d)',
+                color: '#fff',
+                boxShadow: '0 4px 24px rgba(22,163,74,0.4)',
+              }}
+            >
+              Cumpără acum
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 font-semibold px-8 py-4 rounded-2xl backdrop-blur-sm transition-all duration-200"
+              style={{
+                color: '#d1fae5',
+                border: '1.5px solid rgba(74,222,128,0.35)',
+                background: 'rgba(74,222,128,0.08)',
+              }}
+            >
+              Explorează
+            </Link>
+          </div>
+
+          {/* Trust pills */}
+          <div
+            className="flex flex-wrap gap-2 mb-10 animate-fade-in-up"
+            style={{ animationDelay: '320ms' }}
+          >
+            {TRUST_PILLS.map(({ icon: Icon, text }) => (
+              <div
+                key={text}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-medium backdrop-blur-sm"
+                style={{
+                  color: '#bbf7d0',
+                  border: '1px solid rgba(74,222,128,0.2)',
+                  background: 'rgba(15,40,15,0.5)',
+                }}
+              >
+                <Icon className="w-3.5 h-3.5 shrink-0" style={{ color: '#4ade80' }} />
+                {text}
               </div>
+            ))}
+          </div>
 
-              {/* Floating badge — delivery */}
-              <div className="absolute -bottom-10 right-6 z-40 bg-emerald-500 rounded-2xl shadow-xl px-3.5 py-2.5 flex items-center gap-2">
-                <Truck className="w-4 h-4 text-white shrink-0" />
-                <div>
-                  <div className="font-bold text-white text-xs leading-none">Livrare rapidă</div>
-                  <div className="text-[10px] text-emerald-100 mt-0.5">1–3 zile lucrătoare</div>
-                </div>
+          {/* Stats */}
+          <div
+            className="flex items-center gap-6 pt-7 animate-fade-in-up"
+            style={{
+              borderTop: '1px solid rgba(74,222,128,0.2)',
+              animationDelay: '400ms',
+            }}
+          >
+            <div>
+              <div className="text-2xl font-extrabold text-white">10.000+</div>
+              <div className="text-xs mt-0.5" style={{ color: '#86efac' }}>Clienți mulțumiți</div>
+            </div>
+            <div className="w-px h-9" style={{ background: 'rgba(74,222,128,0.2)' }} />
+            <div>
+              <div className="flex items-center gap-0.5 mb-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                ))}
               </div>
-
+              <div className="text-xs" style={{ color: '#86efac' }}>Rating 4.9 / 5</div>
+            </div>
+            <div className="w-px h-9" style={{ background: 'rgba(74,222,128,0.2)' }} />
+            <div>
+              <div className="text-2xl font-extrabold text-white">50+</div>
+              <div className="text-xs mt-0.5" style={{ color: '#86efac' }}>Produse disponibile</div>
             </div>
           </div>
 
         </div>
       </div>
+
+      {/* Scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 opacity-60 animate-float">
+        <div className="w-5 h-8 rounded-full border-2 border-white/40 flex items-start justify-center pt-1.5">
+          <div className="w-1 h-2 rounded-full bg-white/70 animate-bounce" />
+        </div>
+      </div>
+
     </section>
   );
 }
