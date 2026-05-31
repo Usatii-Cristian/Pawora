@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Search, X, ArrowRight } from 'lucide-react';
-import { PRODUCTS } from '@/lib/mockData';
 import { getCategoryLabel } from '@/lib/categories';
 
 export default function SearchModal({ onClose }) {
   const [query, setQuery] = useState('');
+  const [products, setProducts] = useState([]);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -16,6 +16,11 @@ export default function SearchModal({ onClose }) {
     document.body.style.overflow = 'hidden';
     const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handleEsc);
+    // încarcă produsele curente (inclusiv cele adăugate din admin)
+    fetch('/api/products')
+      .then((r) => r.json())
+      .then((data) => Array.isArray(data) && setProducts(data))
+      .catch(() => {});
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleEsc);
@@ -24,7 +29,7 @@ export default function SearchModal({ onClose }) {
 
   const results =
     query.trim().length >= 2
-      ? PRODUCTS.filter(
+      ? products.filter(
           (p) =>
             p.name.toLowerCase().includes(query.toLowerCase()) ||
             p.description.toLowerCase().includes(query.toLowerCase()) ||

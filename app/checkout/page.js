@@ -69,6 +69,31 @@ export default function CheckoutPage() {
     return null;
   };
 
+  // Algoritm Luhn — validează numărul cardului
+  const luhnValid = (num) => {
+    const digits = num.replace(/\D/g, '');
+    if (digits.length < 13) return false;
+    let sum = 0, alt = false;
+    for (let i = digits.length - 1; i >= 0; i--) {
+      let d = parseInt(digits[i], 10);
+      if (alt) { d *= 2; if (d > 9) d -= 9; }
+      sum += d;
+      alt = !alt;
+    }
+    return sum % 10 === 0;
+  };
+
+  const expiryValid = (exp) => {
+    const m = exp.match(/^(\d{2})\/(\d{2})$/);
+    if (!m) return false;
+    const mm = parseInt(m[1], 10);
+    const yy = parseInt(m[2], 10);
+    if (mm < 1 || mm > 12) return false;
+    const now = new Date();
+    const expDate = new Date(2000 + yy, mm); // prima zi a lunii următoare
+    return expDate > now;
+  };
+
   if (items.length === 0 && !success) {
     router.replace('/cart');
     return null;
@@ -109,6 +134,18 @@ export default function CheckoutPage() {
     e.preventDefault();
     if (!card.number || !card.holder || !card.expiry || !card.cvv) {
       setError('Completați toate câmpurile cardului.');
+      return;
+    }
+    if (!luhnValid(card.number)) {
+      setError('Numărul cardului pare invalid. Verifică cifrele.');
+      return;
+    }
+    if (!expiryValid(card.expiry)) {
+      setError('Data de expirare este invalidă sau cardul a expirat.');
+      return;
+    }
+    if (card.cvv.length < 3) {
+      setError('Codul CVV trebuie să aibă 3 cifre.');
       return;
     }
     setError('');

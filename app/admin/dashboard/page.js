@@ -2,10 +2,11 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { verifyToken } from '@/lib/jwt';
-import { getProducts, CATEGORIES } from '@/lib/store';
-import { Package, Tag, TrendingUp, Sparkles, ExternalLink, CheckCircle } from 'lucide-react';
+import { getProducts, getOrders, getMessages, CATEGORIES } from '@/lib/store';
+import { Package, ShoppingBag, Wallet, Mail, ExternalLink, CheckCircle } from 'lucide-react';
 
 export const metadata = { title: 'Dashboard — AquaPet Admin' };
+export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboardPage() {
   const cookieStore = await cookies();
@@ -15,6 +16,14 @@ export default async function AdminDashboardPage() {
   if (!payload) redirect('/admin/login');
 
   const products = getProducts();
+  const orders = getOrders();
+  const messages = getMessages();
+
+  const revenue = orders
+    .filter((o) => o.status !== 'anulat')
+    .reduce((sum, o) => sum + (o.orderTotal || 0), 0);
+  const newOrders = orders.filter((o) => o.status === 'nou').length;
+  const unreadMessages = messages.filter((m) => !m.read).length;
 
   const stats = [
     {
@@ -24,30 +33,36 @@ export default async function AdminDashboardPage() {
       color: 'text-blue-700',
       bg: 'bg-blue-50',
       border: 'border-blue-100',
+      href: '/admin/products',
     },
     {
-      label: 'Categorii',
-      value: CATEGORIES.length,
-      icon: Tag,
+      label: 'Comenzi',
+      value: orders.length,
+      hint: newOrders > 0 ? `${newOrders} noi` : null,
+      icon: ShoppingBag,
       color: 'text-green-700',
       bg: 'bg-green-50',
       border: 'border-green-100',
+      href: '/admin/orders',
     },
     {
-      label: 'Featured',
-      value: products.filter((p) => p.featured).length,
-      icon: TrendingUp,
+      label: 'Venituri',
+      value: `${revenue} lei`,
+      icon: Wallet,
       color: 'text-orange-700',
       bg: 'bg-orange-50',
       border: 'border-orange-100',
+      href: '/admin/orders',
     },
     {
-      label: 'Noutăți',
-      value: products.filter((p) => p.newArrival).length,
-      icon: Sparkles,
+      label: 'Mesaje',
+      value: messages.length,
+      hint: unreadMessages > 0 ? `${unreadMessages} necitite` : null,
+      icon: Mail,
       color: 'text-violet-700',
       bg: 'bg-violet-50',
       border: 'border-violet-100',
+      href: '/admin/messages',
     },
   ];
 
@@ -77,21 +92,27 @@ export default async function AdminDashboardPage() {
 
       {/* Stats row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {stats.map(({ label, value, icon: Icon, color, bg, border }) => (
-          <div
+        {stats.map(({ label, value, hint, icon: Icon, color, bg, border, href }) => (
+          <Link
             key={label}
-            className={`bg-white rounded-2xl p-5 border ${border} shadow-sm`}
+            href={href}
+            className={`bg-white rounded-2xl p-5 border ${border} shadow-sm hover:shadow-md transition-shadow group`}
           >
-            <div
-              className={`w-10 h-10 rounded-xl ${bg} ${color} flex items-center justify-center mb-4`}
-            >
-              <Icon className="w-5 h-5" />
+            <div className="flex items-start justify-between mb-4">
+              <div className={`w-10 h-10 rounded-xl ${bg} ${color} flex items-center justify-center`}>
+                <Icon className="w-5 h-5" />
+              </div>
+              {hint && (
+                <span className="text-[11px] font-bold bg-red-500 text-white px-2 py-0.5 rounded-full">
+                  {hint}
+                </span>
+              )}
             </div>
             <div className="text-3xl font-extrabold text-stone-900 leading-none mb-1">
               {value}
             </div>
-            <div className="text-sm text-stone-500">{label}</div>
-          </div>
+            <div className="text-sm text-stone-500 group-hover:text-stone-700 transition-colors">{label}</div>
+          </Link>
         ))}
       </div>
 

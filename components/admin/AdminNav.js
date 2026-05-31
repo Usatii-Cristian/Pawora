@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { PawPrint, LayoutDashboard, Package, LogOut, ExternalLink, Mail, FileText } from 'lucide-react';
+import { PawPrint, LayoutDashboard, Package, LogOut, ExternalLink, Mail, FileText, ShoppingBag } from 'lucide-react';
 
 const NAV_ITEMS = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/products', label: 'Produse', icon: Package },
+  { href: '/admin/orders', label: 'Comenzi', icon: ShoppingBag },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/messages', label: 'Mesaje', icon: Mail },
 ];
