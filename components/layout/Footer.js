@@ -15,8 +15,6 @@ const QUICK_LINKS = [
   { href: '/contact', label: 'Contactează-ne' },
   { href: '/cart', label: 'Coș de cumpărături' },
   { href: '/wishlist', label: 'Lista de favorite' },
-  { href: '/termeni', label: 'Termeni de utilizare' },
-  { href: '/confidentialitate', label: 'Confidențialitate' },
 ];
 
 export default function Footer() {
@@ -146,12 +144,22 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/6 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-stone-600 flex items-center gap-1.5">
-            &copy; {new Date().getFullYear()} AquaPet — Făcut cu
-            <Heart className="w-3 h-3 text-red-500 fill-red-500" />
-            în Moldova
-          </p>
+        <div className="border-t border-white/6 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-x-5 gap-y-2 text-center sm:text-left">
+            <p className="text-xs text-stone-600 flex items-center gap-1.5">
+              &copy; {new Date().getFullYear()} AquaPet — Făcut cu
+              <Heart className="w-3 h-3 text-red-500 fill-red-500" />
+              în Moldova
+            </p>
+            <div className="flex items-center gap-4">
+              <Link href="/termeni" className="text-xs text-stone-500 hover:text-emerald-400 transition-colors">
+                Termeni de utilizare
+              </Link>
+              <Link href="/confidentialitate" className="text-xs text-stone-500 hover:text-emerald-400 transition-colors">
+                Confidențialitate
+              </Link>
+            </div>
+          </div>
           <p className="text-xs text-stone-700">
             Proiect de practică — nu se procesează tranzacții reale.
           </p>

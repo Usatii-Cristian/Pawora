@@ -21,15 +21,9 @@ export default function CategoriesPreview() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="flex items-end justify-between mb-10">
-            <div>
-              <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
-                Categorii
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900">
-                Cumpără după{' '}
-                <span className="text-gradient-dark">categorie</span>
-              </h2>
-            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900">
+              Cumpără după categorie
+            </h2>
             <Link
               href="/products"
               className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-stone-500 hover:text-green-700 transition-colors group"

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, TrendingUp } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { getProducts } from '@/lib/store';
 import ProductCard from '@/components/ui/ProductCard';
 import FadeIn from '@/components/ui/FadeIn';
@@ -17,19 +17,9 @@ export default function BestSellers() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="flex items-end justify-between mb-10">
-            <div>
-              <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-700 bg-orange-50 border border-orange-100 px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
-                <TrendingUp className="w-3 h-3" />
-                Cele mai populare
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900">
-                Cele mai{' '}
-                <span className="text-transparent bg-clip-text"
-                  style={{ backgroundImage: 'linear-gradient(135deg, #ea580c, #f59e0b)' }}>
-                  vândute
-                </span>
-              </h2>
-            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900">
+              Cele mai vândute
+            </h2>
             <Link
               href="/products"
               className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-stone-500 hover:text-orange-600 transition-colors group"

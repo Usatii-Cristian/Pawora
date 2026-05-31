@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { getProducts } from '@/lib/store';
 import ProductCard from '@/components/ui/ProductCard';
 import FadeIn from '@/components/ui/FadeIn';
@@ -15,19 +15,9 @@ export default function NewArrivals() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="flex items-end justify-between mb-10">
-            <div>
-              <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-700 bg-violet-50 border border-violet-100 px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
-                <Zap className="w-3 h-3" />
-                Tocmai sosite
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900">
-                <span className="text-transparent bg-clip-text"
-                  style={{ backgroundImage: 'linear-gradient(135deg, #7c3aed, #a855f7)' }}>
-                  Noutăți
-                </span>{' '}
-                în magazin
-              </h2>
-            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900">
+              Noutăți în magazin
+            </h2>
             <Link
               href="/products"
               className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-stone-500 hover:text-violet-700 transition-colors group"
