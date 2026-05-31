@@ -49,8 +49,8 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="AquaPet"
-                width={36}
-                height={36}
+                width={48}
+                height={48}
                 className="rounded-xl object-contain transition-transform duration-200 group-hover:scale-105"
               />
               <span className="font-extrabold text-lg tracking-tight text-stone-900 group-hover:text-blue-700 transition-colors hidden sm:block">
