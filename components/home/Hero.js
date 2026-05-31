@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: '92vh' }}>
+    <section className="relative w-full overflow-hidden" style={{ minHeight: '100vh', height: '100dvh' }}>
 
       {/* Imaginea de fundal */}
       <Image
@@ -26,7 +26,7 @@ export default function Hero() {
       />
 
       {/* Text stânga */}
-      <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+      <div className="relative z-10 h-full min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <div className="w-full max-w-xl py-20 lg:py-28">
 
           {/* Titlu — culori fixe, fără gradient */}
