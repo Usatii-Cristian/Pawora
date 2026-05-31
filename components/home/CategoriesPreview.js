@@ -6,16 +6,16 @@ import FadeIn from '@/components/ui/FadeIn';
 
 export default function CategoriesPreview() {
   const products = getProducts();
-  const categories = CATEGORIES.map((cat) => ({
-    ...cat,
-    productCount: products.filter((p) => p.category === cat.slug).length,
-  }));
+
+  const categories = CATEGORIES.map((cat) => {
+    const catProducts = products.filter((p) => p.category === cat.slug);
+    const image = catProducts[0]?.image ?? null;
+    return { ...cat, image };
+  });
 
   return (
     <section className="py-20 relative overflow-hidden">
-      {/* Subtle background */}
       <div className="absolute inset-0 bg-gradient-to-b from-stone-50 to-white" />
-      {/* Decorative blobs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-green-100/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
