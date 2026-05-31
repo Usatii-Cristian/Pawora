@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -28,12 +28,6 @@ export default function Hero() {
       {/* Text stânga */}
       <div className="relative z-10 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <div className="w-full max-w-xl py-20 lg:py-28">
-
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 border border-[#4ade80]/30 bg-[#4ade80]/10 text-[#4ade80] text-xs font-semibold px-4 py-1.5 rounded-full mb-7 backdrop-blur-sm tracking-wider uppercase animate-fade-in">
-            <Sparkles className="w-3.5 h-3.5" />
-            Magazin premium pentru animale
-          </div>
 
           {/* Titlu — culori fixe, fără gradient */}
           <h1
