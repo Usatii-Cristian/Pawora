@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getProducts, CATEGORIES } from '@/lib/store';
-import ProductCard from '@/components/ui/ProductCard';
+import ProductGrid from '@/components/ui/ProductGrid';
 
 export const metadata = {
   title: 'Produse — AquaPet',
@@ -69,24 +69,8 @@ export default async function ProductsPage({ searchParams }) {
           ))}
         </div>
 
-        {/* Grid produse */}
-        {products.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-24">
-            <p className="text-stone-400 text-lg font-medium">Nu s-au găsit produse</p>
-            <Link
-              href="/products"
-              className="mt-4 inline-block text-green-700 text-sm font-medium hover:underline"
-            >
-              Vezi toate produsele
-            </Link>
-          </div>
-        )}
+        {/* Grid produse cu paginare */}
+        <ProductGrid key={selectedCategory} products={products} />
       </div>
     </div>
   );
