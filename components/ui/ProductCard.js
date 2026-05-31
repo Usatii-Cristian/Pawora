@@ -49,18 +49,6 @@ export default function ProductCard({ product }) {
           {/* Shimmer overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
 
-          {/* Badges */}
-          {product.bestseller && (
-            <span className="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm shadow-orange-500/30">
-              Bestseller
-            </span>
-          )}
-          {product.newArrival && !product.bestseller && (
-            <span className="absolute top-3 left-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm shadow-emerald-500/30">
-              Noutate
-            </span>
-          )}
-
           {/* Wishlist button */}
           <button
             onClick={handleWishlist}

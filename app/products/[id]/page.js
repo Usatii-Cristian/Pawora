@@ -88,16 +88,6 @@ export default async function ProductDetailPage({ params }) {
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />
-            {product.bestseller && (
-              <span className="absolute top-5 left-5 bg-orange-500 text-white text-sm font-semibold px-3 py-1.5 rounded-full">
-                Bestseller
-              </span>
-            )}
-            {product.newArrival && !product.bestseller && (
-              <span className="absolute top-5 left-5 bg-green-700 text-white text-sm font-semibold px-3 py-1.5 rounded-full">
-                Noutate
-              </span>
-            )}
           </div>
 
           {/* Detalii */}

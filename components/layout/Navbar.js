@@ -23,8 +23,11 @@ export default function Navbar() {
   const { itemCount } = useCart();
   const { count: wishlistCount } = useWishlist();
 
+  const isHome = pathname === '/';
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -32,13 +35,16 @@ export default function Navbar() {
   const isActive = (href) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
+  // Navbar transparent peste hero doar pe homepage, în top, cu meniul mobil închis
+  const transparent = isHome && !scrolled && !mobileOpen;
+
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-white/90 backdrop-blur-md shadow-sm shadow-stone-900/5 border-b border-stone-200/60'
-            : 'bg-white/80 backdrop-blur-sm border-b border-stone-100'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          transparent
+            ? 'bg-transparent border-b border-transparent'
+            : 'bg-white/90 backdrop-blur-md shadow-sm shadow-stone-900/5 border-b border-stone-200/60'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,9 +59,16 @@ export default function Navbar() {
                 height={48}
                 className="rounded-xl object-contain transition-transform duration-200 group-hover:scale-105"
               />
-              <span className="font-extrabold text-lg tracking-tight text-stone-900 group-hover:text-blue-700 transition-colors hidden sm:block">
-                Aqua<span className="text-transparent bg-clip-text"
-                  style={{ backgroundImage: 'linear-gradient(135deg, #16a34a, #10b981)' }}>
+              <span
+                className={`font-extrabold text-lg tracking-tight transition-colors hidden sm:block ${
+                  transparent ? 'text-white drop-shadow-md' : 'text-stone-900 group-hover:text-green-700'
+                }`}
+              >
+                Aqua
+                <span
+                  className={transparent ? 'text-green-300' : 'text-transparent bg-clip-text'}
+                  style={transparent ? undefined : { backgroundImage: 'linear-gradient(135deg, #16a34a, #10b981)' }}
+                >
                   Pet
                 </span>
               </span>
@@ -68,14 +81,20 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                    isActive(link.href)
-                      ? 'text-green-700'
-                      : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
+                    transparent
+                      ? isActive(link.href)
+                        ? 'text-white'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                      : isActive(link.href)
+                        ? 'text-green-700'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
                   }`}
                 >
                   {link.label}
                   {isActive(link.href) && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-green-600 animate-fade-in" />
+                    <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full animate-fade-in ${
+                      transparent ? 'bg-green-300' : 'bg-green-600'
+                    }`} />
                   )}
                 </Link>
               ))}
@@ -86,7 +105,11 @@ export default function Navbar() {
               {/* Search */}
               <button
                 onClick={() => setSearchOpen(true)}
-                className="p-2 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+                className={`p-2 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 ${
+                  transparent
+                    ? 'text-white/90 hover:text-white hover:bg-white/10'
+                    : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100'
+                }`}
                 aria-label="Caută"
               >
                 <Search className="w-5 h-5" />
@@ -95,7 +118,11 @@ export default function Navbar() {
               {/* Wishlist */}
               <Link
                 href="/wishlist"
-                className="relative p-2 text-stone-500 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+                className={`relative p-2 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 ${
+                  transparent
+                    ? 'text-white/90 hover:text-white hover:bg-white/10'
+                    : 'text-stone-500 hover:text-red-500 hover:bg-red-50'
+                }`}
                 aria-label="Favorite"
               >
                 <Heart className="w-5 h-5" />
@@ -109,7 +136,11 @@ export default function Navbar() {
               {/* Cart */}
               <Link
                 href="/cart"
-                className="relative p-2 text-stone-500 hover:text-green-700 hover:bg-green-50 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+                className={`relative p-2 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 ${
+                  transparent
+                    ? 'text-white/90 hover:text-white hover:bg-white/10'
+                    : 'text-stone-500 hover:text-green-700 hover:bg-green-50'
+                }`}
                 aria-label="Coș"
               >
                 <ShoppingCart className="w-5 h-5" />
@@ -122,14 +153,15 @@ export default function Navbar() {
 
               {/* Mobile toggle */}
               <button
-                className="md:hidden p-2 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded-xl transition-all duration-200 ml-1"
+                className={`md:hidden p-2 rounded-xl transition-all duration-200 ml-1 ${
+                  transparent
+                    ? 'text-white/90 hover:text-white hover:bg-white/10'
+                    : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100'
+                }`}
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label="Meniu"
               >
-                <span className={`block transition-all duration-200 ${mobileOpen ? 'rotate-90 opacity-0 absolute' : ''}`}>
-                  <Menu className="w-5 h-5" />
-                </span>
-                {mobileOpen ? <X className="w-5 h-5" /> : null}
+                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -170,6 +202,9 @@ export default function Navbar() {
           </nav>
         </div>
       </header>
+
+      {/* Spacer — împinge conținutul sub navbar pe paginile fără hero */}
+      {!isHome && <div className="h-16" />}
 
       {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </>
